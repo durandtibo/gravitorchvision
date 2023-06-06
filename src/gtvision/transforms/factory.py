@@ -1,13 +1,14 @@
+from __future__ import annotations
+
 __all__ = ["create_compose"]
 
 from collections.abc import Callable, Sequence
-from typing import Union
 
 from gravitorch.utils import setup_object
 from torchvision.transforms import Compose
 
 
-def create_compose(transforms: Sequence[Union[Callable, dict]]) -> Compose:
+def create_compose(transforms: Sequence[Callable | dict]) -> Compose:
     r"""Instantiates a ``torchvision.transforms.Compose`` from its configuration.
 
     Args:
