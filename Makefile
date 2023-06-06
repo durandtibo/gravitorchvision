@@ -1,5 +1,5 @@
 SHELL=/bin/bash
-NAME=gravitorchvision
+NAME=gtvision
 SOURCE=src/$(NAME)
 TESTS=tests
 UNIT_TESTS=tests/unit
