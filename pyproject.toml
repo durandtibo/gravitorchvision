@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "gravitorchvision"
-version = "0.0.0a2"
+name = "gtvision"
+version = "0.0.0a3"
 description = "A light library to check if two complex/nested objects are equal or not"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -22,7 +22,7 @@ classifiers = [
 ]
 
 packages = [
-    { include = "gravitorchvision", from = "src" },
+    { include = "gtvision", from = "src" },
 ]
 
 [tool.poetry.dependencies]
@@ -64,7 +64,7 @@ source = ["src", "*/site-packages"]
 
 [tool.coverage.run]
 branch = true
-source = ["gravitorchvision"]
+source = ["gtvision"]
 
 [tool.coverage.report]
 show_missing = true

@@ -25,7 +25,7 @@ def create_compose(transforms: Sequence[Union[Callable, dict]]) -> Compose:
 
     .. code-block:: pycon
 
-        >>> from gravitorchvision.transforms import create_compose
+        >>> from gtvision.transforms import create_compose
         >>> from torchvision.transforms import PILToTensor
         >>> create_compose(
         ...     [

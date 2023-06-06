@@ -1,7 +1,7 @@
 from objectory import OBJECT_TARGET
 from torchvision import transforms
 
-from gravitorchvision.transforms import create_compose
+from gtvision.transforms import create_compose
 
 ##########################
 #     create_compose     #

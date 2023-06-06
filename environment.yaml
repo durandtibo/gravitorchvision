@@ -1,4 +1,4 @@
-name: gravitorchvision
+name: gtvision
 channels:
   - conda-forge
 dependencies:
