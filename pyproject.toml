@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "gtvision"
 version = "0.0.0a6"
-description = "A light library to check if two complex/nested objects are equal or not"
+description = "gravitorch extension for torchvision"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
 homepage = "https://github.com/durandtibo/gravitorch-vision"
