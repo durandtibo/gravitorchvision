@@ -32,6 +32,10 @@ jobs:
           poetry run make config-poetry
           poetry run make install
 
+      - name: Install latest gravitorch package
+        run: |
+          pip install --pre gravitorch
+
       - name: Show installed packages
         run: |
           poetry run poetry show
@@ -75,6 +79,10 @@ jobs:
         run: |
           poetry run make config-poetry
           poetry run make install-min
+
+      - name: Install latest gravitorch package
+        run: |
+          pip install --pre gravitorch
 
       - name: Show installed packages
         run: |
