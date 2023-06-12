@@ -26,7 +26,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-coola = "^0.0,>=0.0.7"
+coola = "^0.0"
 gravitorch = "^0.0,>=0.0.13"
 hya = "^0.0,>=0.0.10"
 hydra-core = "^1.3"

@@ -25,8 +25,8 @@ files = [
 lazy-object-proxy = ">=1.4.0"
 typing-extensions = {version = ">=4.0.0", markers = "python_version < \"3.11\""}
 wrapt = [
-    {version = ">=1.14,<2", markers = "python_version >= \"3.11\""},
     {version = ">=1.11,<2", markers = "python_version < \"3.11\""},
+    {version = ">=1.14,<2", markers = "python_version >= \"3.11\""},
 ]
 
 [[package]]
@@ -228,17 +228,17 @@ development = ["black", "flake8", "mypy", "pytest", "types-colorama"]
 
 [[package]]
 name = "coola"
-version = "0.0.7"
-description = "A light library to check if two complex/nested objects are equal or not"
+version = "0.0.9"
+description = "A library to check if two complex/nested objects are equal or not"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "coola-0.0.7-py3-none-any.whl", hash = "sha256:2087ecd2449ae71e314bcc9a7d95497433d161fc56aee81c11afb7ef0232c7c6"},
-    {file = "coola-0.0.7.tar.gz", hash = "sha256:e3ac991adf4f0feb3943c7decee622ade228116be5f0d00d253c9e3810814b08"},
+    {file = "coola-0.0.9-py3-none-any.whl", hash = "sha256:511f67518b9546389c49b72c60515b91aa8820af9814f8e0da44c7b721ea5504"},
+    {file = "coola-0.0.9.tar.gz", hash = "sha256:f47fb151b11c38b165a4b3ebb7b1b12f00319a1bff68db98aecc9593ded755db"},
 ]
 
 [package.extras]
-all = ["numpy (>=1.20,<2.0)", "torch (>=1.10,<3.0)"]
+all = ["numpy (>=1.20,<2.0)", "torch (>=1.10,<3.0)", "xarray (>=2022.3.0)"]
 
 [[package]]
 name = "coverage"
@@ -407,8 +407,8 @@ numpy = ">=1.24,<2.0"
 objectory = ">=0.0.2,<0.1"
 psutil = ">=5.9,<6.0"
 pytorch-ignite = [
-    {version = ">=0.4.12,<0.5", markers = "python_version >= \"3.11\" and python_version < \"4.0\""},
     {version = ">=0.4,<0.5", markers = "python_version < \"3.11\" or python_version >= \"4.0\""},
+    {version = ">=0.4.12,<0.5", markers = "python_version >= \"3.11\" and python_version < \"4.0\""},
 ]
 tabulate = ">=0.9,<0.10"
 torch = ">=2.0,<3.0"
@@ -953,8 +953,8 @@ files = [
 astroid = ">=2.15.4,<=2.17.0-dev0"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
 dill = [
-    {version = ">=0.3.6", markers = "python_version >= \"3.11\""},
     {version = ">=0.2", markers = "python_version < \"3.11\""},
+    {version = ">=0.3.6", markers = "python_version >= \"3.11\""},
 ]
 isort = ">=4.2.5,<6"
 mccabe = ">=0.6,<0.8"
@@ -1463,4 +1463,4 @@ all = ["colorlog"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "a3bf272be69152b31b2bcf7e86330aeb16d83a66c075b6e094885af6b85edcd9"
+content-hash = "281b33f7cf9f9979be3f8f23c830ed9ccf23d9d744b080058f1d53d6ae3a2dbf"
