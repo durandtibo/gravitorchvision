@@ -14,7 +14,12 @@ from torchvision.transforms import Compose
 
 
 class MNIST(MNIST_):
-    r"""Update MNIST dataset to return a dict instead of a tuple."""
+    r"""Update MNIST dataset to return a dict instead of a tuple.
+
+    Args:
+    ----
+        See ``torchvision.datasets.MNIST`` documentation.
+    """
 
     def __init__(
         self,
@@ -57,8 +62,8 @@ class MNIST(MNIST_):
         r"""Creates a MNIST dataset wih default transforms.
 
         Args:
-            root (``Path`` or str): Specifies the root directory of
-                the dataset.
+            root (``pathlib.Path`` or str): Specifies the root
+                directory of the dataset.
             train (bool, optional): If ``True``, returns the training
                 dataset, otherwise returns the test dataset.
                 Default: ``True``
@@ -84,8 +89,5 @@ def get_default_transform() -> Compose:
 
     Returns:
         ``torchvision.transforms.Compose``: The default transforms.
-
-    Raises:
-        RuntimeError if ``torchvision`` is not installed.
     """
     return Compose([transforms.ToTensor(), transforms.Normalize((0.1307,), (0.3081,))])
