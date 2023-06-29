@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gtvision"
-version = "0.0.0a11"
+version = "0.0.0a12"
 description = "gravitorch extension for torchvision"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
