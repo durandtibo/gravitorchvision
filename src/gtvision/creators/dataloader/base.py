@@ -3,10 +3,12 @@ from __future__ import annotations
 __all__ = ["BaseDataLoaderCreator"]
 
 from abc import ABC, abstractmethod
-from typing import Generic, TypeVar
+from typing import TYPE_CHECKING, Generic, TypeVar
 
-from gravitorch.engines.base import BaseEngine
 from torch.utils.data import DataLoader
+
+if TYPE_CHECKING:
+    from gravitorch.engines import BaseEngine
 
 T = TypeVar("T")
 

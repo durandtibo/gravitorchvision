@@ -41,7 +41,6 @@ def test_distributed_dataloader_creator_dataset(dataset: Dataset) -> None:
     assert isinstance(dataloader, DataLoader)
     assert dataloader.dataset is dataset
     batch = next(iter(dataloader))
-    print(batch)
     assert batch.equal(
         torch.tensor(
             [
