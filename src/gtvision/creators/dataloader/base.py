@@ -30,7 +30,7 @@ class BaseDataLoaderCreator(Generic[T], ABC):
         ...     }
         ... )
         >>> creator.create()
-        DummyMultiClassDataLoader(num_examples=10, num_classes=2, feature_size=4, noise_std=0.2)
+        <torch.utils.data.dataloader.DataLoader object at 0x0123456789>
     """
 
     @abstractmethod
