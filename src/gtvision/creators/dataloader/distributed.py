@@ -4,9 +4,9 @@ __all__ = ["DistributedDataLoaderCreator"]
 
 from typing import TypeVar
 
-from gravitorch import distributed as dist
 from gravitorch.data.dataloaders import create_dataloader
-from gravitorch.engines import BaseEngine
+from gravitorch.distributed import comm as dist
+from gravitorch.engines.base import BaseEngine
 from gravitorch.utils import setup_object
 from gravitorch.utils.format import str_indent, str_pretty_dict
 from gravitorch.utils.seed import get_torch_generator
@@ -28,6 +28,9 @@ class DistributedDataLoaderCreator(BaseDataLoaderCreator[T]):
 
     Args:
     ----
+        dataset (``torch.utils.data.Dataset``): Specifies a
+            dataset (or its configuration) or a dataset creator
+            (or its configuration).
         shuffle (bool, optional): Specifies of the examples are
             shuffled or not. You should set to ``True`` to have the
             data reshuffled at every epoch. Default: ``False``

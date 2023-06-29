@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gtvision"
-version = "0.0.0a12"
+version = "0.0.0a13"
 description = "gravitorch extension for torchvision"
 readme = "README.md"
 authors = ["Thibaut Durand <durand.tibo+gh@gmail.com>"]
@@ -72,8 +72,7 @@ source = ["gtvision"]
 show_missing = true
 exclude_lines = [
     "pragma: no cover",
-    "if is_torch_available()",
-    "if is_numpy_available()",
+    "if TYPE_CHECKING:"
 ]
 
 [tool.pytest.ini_options]
