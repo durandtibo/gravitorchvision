@@ -390,13 +390,13 @@ testing = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "diff-cover (>=7.5)", "p
 
 [[package]]
 name = "gravitorch"
-version = "0.0.15"
+version = "0.0.16"
 description = "A library to train ML models with PyTorch"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "gravitorch-0.0.15-py3-none-any.whl", hash = "sha256:9aec8a37f289f0621ddf3e5ddf1e303426f1b782dd2927f616b0bb0a4db51faa"},
-    {file = "gravitorch-0.0.15.tar.gz", hash = "sha256:f36e95acadee8d46a53d040a8761ef7c497f262d6d057bf38167279a23a0a955"},
+    {file = "gravitorch-0.0.16-py3-none-any.whl", hash = "sha256:894d428a6d76e973096a11fde7f921ce39ce693fc7f12905e967a2edc044efe3"},
+    {file = "gravitorch-0.0.16.tar.gz", hash = "sha256:e0d9d7890c0a177cf29a809f70d44531a47f5e987d684313e8431fbdcd177748"},
 ]
 
 [package.dependencies]
@@ -1345,13 +1345,13 @@ telegram = ["requests"]
 
 [[package]]
 name = "typing-extensions"
-version = "4.6.3"
+version = "4.7.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "typing_extensions-4.6.3-py3-none-any.whl", hash = "sha256:88a4153d8505aabbb4e13aacb7c486c2b4a33ca3b3f807914a9b4c844c471c26"},
-    {file = "typing_extensions-4.6.3.tar.gz", hash = "sha256:d91d5919357fe7f681a9f2b5b4cb2a5f1ef0a1e9f59c4d8ff0d3491e05c0ffd5"},
+    {file = "typing_extensions-4.7.0-py3-none-any.whl", hash = "sha256:5d8c9dac95c27d20df12fb1d97b9793ab8b2af8a3a525e68c80e21060c161771"},
+    {file = "typing_extensions-4.7.0.tar.gz", hash = "sha256:935ccf31549830cda708b42289d44b6f74084d616a00be651601a4f968e77c82"},
 ]
 
 [[package]]
@@ -1491,4 +1491,4 @@ all = ["colorlog", "torchdata"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "1ecba230f058bc34c3ed7aeb0f10ac4135e61c2cbc7cf61229a56a7d0d7c46f9"
+content-hash = "3f83cd6dc2064e46d97f8b436c309b533d6f95bc9acc821a64272c80db3d8a68"
