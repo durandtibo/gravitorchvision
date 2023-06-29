@@ -7,7 +7,7 @@ from typing import TypeVar
 from gravitorch.data.dataloaders import create_dataloader
 from gravitorch.engines import BaseEngine
 from gravitorch.utils import setup_object
-from gravitorch.utils.format import str_indent
+from gravitorch.utils.format import str_indent, str_pretty_dict
 from gravitorch.utils.seed import get_torch_generator
 from torch.utils.data import DataLoader, Dataset
 
@@ -38,7 +38,11 @@ class DataLoaderCreator(BaseDataLoaderCreator[T]):
         self._kwargs = kwargs
 
     def __str__(self) -> str:
-        return f"{self.__class__.__qualname__}(\n  dataset={str_indent(self._dataset)}\n)"
+        config = {"dataset": self._dataset, "seed": self._seed} | self._kwargs
+        return (
+            f"{self.__class__.__qualname__}(\n"
+            f"  {str_indent(str_pretty_dict(config, sorted_keys=True))}\n)"
+        )
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader[T]:
         dataset = self._dataset
