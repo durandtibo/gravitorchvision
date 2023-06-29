@@ -26,13 +26,13 @@ class DataLoaderDataFlowCreator(BaseDataFlowCreator):
     """
 
     def __init__(self, dataloader: DataLoader | BaseDataLoaderCreator | dict) -> None:
-        self.dataloader: DataLoader | BaseDataLoaderCreator = setup_object(dataloader)
+        self._dataloader: DataLoader | BaseDataLoaderCreator = setup_object(dataloader)
 
     def __str__(self) -> str:
         return f"{self.__class__.__qualname__}()"
 
     def create(self, engine: BaseEngine | None = None) -> DataLoaderDataFlow[T]:
-        dataloader = self.dataloader
+        dataloader = self._dataloader
         if isinstance(dataloader, BaseDataLoaderCreator):
             dataloader = dataloader.create(engine)
         return DataLoaderDataFlow(dataloader)
