@@ -9,11 +9,10 @@ from typing import Any
 from gravitorch.datasources import BaseDataSource, LoaderNotFoundError
 from gravitorch.engines import BaseEngine
 from gravitorch.experimental.dataflow import BaseDataFlow
-from gravitorch.utils import setup_object
 from gravitorch.utils.asset import AssetManager
 from gravitorch.utils.format import str_indent, str_torch_mapping
 
-from gtvision.creators.dataflow.base import BaseDataFlowCreator
+from gtvision.creators.dataflow.base import BaseDataFlowCreator, setup_dataflow_creator
 
 logger = logging.getLogger(__name__)
 
@@ -50,7 +49,7 @@ class VanillaDataSource(BaseDataSource):
     def __init__(self, dataflow_creators: Mapping[str, BaseDataFlowCreator | dict]) -> None:
         self._asset_manager = AssetManager()
         self._dataflow_creators: Mapping[str, BaseDataFlowCreator] = {
-            key: setup_object(value) for key, value in dataflow_creators.items()
+            key: setup_dataflow_creator(value) for key, value in dataflow_creators.items()
         }
 
     def __repr__(self) -> str:
