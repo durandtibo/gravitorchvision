@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__ = ["DataFlowDataSource"]
+__all__ = ["VanillaDataSource"]
 
 import logging
 from collections.abc import Mapping
@@ -18,7 +18,7 @@ from gtvision.creators.dataflow.base import BaseDataFlowCreator
 logger = logging.getLogger(__name__)
 
 
-class DataFlowDataSource(BaseDataSource):
+class VanillaDataSource(BaseDataSource):
     r"""Implement a simple data source using dataflow creators.
 
     Args:
@@ -30,9 +30,9 @@ class DataFlowDataSource(BaseDataSource):
 
     .. code-block:: pycon
 
-        >>> from gtvision.datasources import DataFlowDataSource
+        >>> from gtvision.datasources import VanillaDataSource
         >>> from gtvision.creators.dataflow import IterableDataFlowCreator
-        >>> datasource = DataFlowDataSource(
+        >>> datasource = VanillaDataSource(
         ...     {
         ...         "train": {
         ...             "_target_": "gtvision.creators.dataflow.IterableDataFlowCreator",
