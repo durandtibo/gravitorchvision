@@ -21,7 +21,16 @@ class BaseDataPipeCreator(Generic[T], ABC):
 
     .. code-block:: pycon
 
-        >>> TODO
+        >>> from gtvision.creators.datapipe import ChainedDataPipeCreator
+        >>> creator = ChainedDataPipeCreator(
+        ...     {
+        ...         "_target_": "torch.utils.data.datapipes.iter.IterableWrapper",
+        ...         "iterable": [1, 2, 3, 4],
+        ...     }
+        ... )
+        >>> datapipe = creator.create()
+        >>> tuple(datapipe)
+        (1, 2, 3, 4)
     """
 
     @abstractmethod
