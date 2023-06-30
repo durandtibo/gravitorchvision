@@ -13,7 +13,7 @@ from gtvision.creators.datapipe import EpochRandomSeedDataPipeCreator
 
 
 def test_epoch_random_seed_data_pipe_creator_str() -> None:
-    assert str(EpochRandomSeedDataPipeCreator({})).startswith("EpochRandomDataPipeCreator(")
+    assert str(EpochRandomSeedDataPipeCreator({})).startswith("EpochRandomSeedDataPipeCreator(")
 
 
 def test_epoch_random_seed_data_pipe_creator_create_engine_none() -> None:
