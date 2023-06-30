@@ -1,4 +1,4 @@
-__all__ = ["DataFlowDataSource", "MNISTDataSource"]
+__all__ = ["VanillaDataSource", "MNISTDataSource"]
 
-from gtvision.datasources.dataflow import DataFlowDataSource
 from gtvision.datasources.mnist import MNISTDataSource
+from gtvision.datasources.vanilla import VanillaDataSource
