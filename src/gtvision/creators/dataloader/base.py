@@ -5,6 +5,7 @@ __all__ = ["BaseDataLoaderCreator"]
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
+from objectory import AbstractFactory
 from torch.utils.data import DataLoader
 
 if TYPE_CHECKING:
@@ -13,7 +14,7 @@ if TYPE_CHECKING:
 T = TypeVar("T")
 
 
-class BaseDataLoaderCreator(Generic[T], ABC):
+class BaseDataLoaderCreator(Generic[T], ABC, metaclass=AbstractFactory):
     r"""Define the base class to implement a data loader creator.
 
     Example usage:
