@@ -5,8 +5,13 @@ __all__ = ["BaseDataLoader2Creator"]
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
+from gravitorch.utils.imports import is_torchdata_available
 from objectory import AbstractFactory
-from torchdata.dataloader2 import DataLoader2
+
+if is_torchdata_available():
+    from torchdata.dataloader2 import DataLoader2
+else:  # pragma: no cover
+    DataLoader2 = "DataLoader2"
 
 if TYPE_CHECKING:
     from gravitorch.engines import BaseEngine
@@ -21,8 +26,9 @@ class BaseDataLoader2Creator(Generic[T], ABC, metaclass=AbstractFactory):
 
     .. code-block:: pycon
 
+        >>> from torch.utils.data.datapipes.iter import IterableWrapper
         >>> from gtvision.creators.dataloader2 import DataLoader2Creator
-        >>> creator = DataLoader2Creator()
+        >>> creator = DataLoader2Creator(IterableWrapper([1, 2, 3, 4, 5]))
         >>> creator.create()
         <torchdata.dataloader2.DataLoader2 object at 0x0123456789>
     """

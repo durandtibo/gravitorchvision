@@ -1,20 +1,28 @@
 from __future__ import annotations
 
+from unittest.mock import Mock
+
 from gravitorch.testing import torchdata_available
+from gravitorch.utils.imports import is_torchdata_available
 from objectory import OBJECT_TARGET
 from pytest import fixture, mark
 from torch.utils.data.datapipes.iter import IterableWrapper
 from torch.utils.data.datapipes.iter.combinatorics import ShufflerIterDataPipe
 from torch.utils.data.graph import DataPipe
-from torchdata.dataloader2 import (
-    DataLoader2,
-    MultiProcessingReadingService,
-    ReadingServiceInterface,
-)
-from torchdata.dataloader2.adapter import Adapter, Shuffle
 
 from gtvision.creators.dataloader2 import DataLoader2Creator
 from gtvision.creators.datapipe import ChainedDataPipeCreator
+
+if is_torchdata_available():
+    from torchdata.dataloader2 import (
+        DataLoader2,
+        MultiProcessingReadingService,
+        ReadingServiceInterface,
+    )
+    from torchdata.dataloader2.adapter import Adapter, Shuffle
+else:  # pragma: no cover
+    Adapter = "Adapter"
+    MultiProcessingReadingService, Shuffle = Mock(), Mock()
 
 
 @fixture
