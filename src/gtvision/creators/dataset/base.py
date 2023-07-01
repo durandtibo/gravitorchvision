@@ -1,17 +1,22 @@
 from __future__ import annotations
 
-__all__ = ["BaseDatasetCreator"]
+__all__ = ["BaseDatasetCreator", "setup_dataset_creator"]
 
+import logging
 from abc import ABC, abstractmethod
 from typing import Generic, TypeVar
 
 from gravitorch.engines.base import BaseEngine
+from gravitorch.utils.format import str_target_object
+from objectory import AbstractFactory
 from torch.utils.data import Dataset
+
+logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
 
 
-class BaseDatasetCreator(Generic[T], ABC):
+class BaseDatasetCreator(Generic[T], ABC, metaclass=AbstractFactory):
     r"""Define the base class to implement a dataset creator.
 
     Example usage:
@@ -44,3 +49,27 @@ class BaseDatasetCreator(Generic[T], ABC):
         -------
             ``torch.utils.data.Dataset``: The created dataset.
         """
+
+
+def setup_dataset_creator(creator: BaseDatasetCreator | dict) -> BaseDatasetCreator:
+    r"""Sets up the dataset creator.
+
+    The dataset creator is instantiated from its configuration by
+    using the ``BaseDatasetCreator`` factory function.
+
+    Args:
+    ----
+        creator (``BaseDatasetCreator`` or dict): Specifies the
+            dataset creator or its configuration.
+
+    Returns:
+    -------
+        ``BaseDatasetCreator``: The instantiated dataset creator.
+    """
+    if isinstance(creator, dict):
+        logger.info(
+            "Initializing the dataset creator from its configuration... "
+            f"{str_target_object(creator)}"
+        )
+        creator = BaseDatasetCreator.factory(**creator)
+    return creator
