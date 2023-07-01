@@ -9,12 +9,19 @@ from gravitorch.data.dataloaders import create_dataloader2
 from gravitorch.engines import BaseEngine
 from gravitorch.utils import setup_object
 from gravitorch.utils.format import str_indent, str_pretty_dict
+from gravitorch.utils.imports import is_torchdata_available
 from torch.utils.data.graph import DataPipe
-from torchdata.dataloader2 import DataLoader2, ReadingServiceInterface
-from torchdata.dataloader2.adapter import Adapter
 
 from gtvision.creators.dataloader2.base import BaseDataLoader2Creator
 from gtvision.creators.datapipe.base import BaseDataPipeCreator
+
+if is_torchdata_available():
+    from torchdata.dataloader2 import DataLoader2, ReadingServiceInterface
+    from torchdata.dataloader2.adapter import Adapter
+else:  # pragma: no cover
+    Adapter = "Adapter"
+    DataLoader2 = "DataLoader2"
+    ReadingServiceInterface = "ReadingServiceInterface"
 
 T = TypeVar("T")
 

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from gravitorch.testing import torchdata_available
 from objectory import OBJECT_TARGET
 from pytest import fixture, mark
 from torch.utils.data.datapipes.iter import IterableWrapper
@@ -26,10 +27,12 @@ def datapipe() -> DataPipe:
 ########################################
 
 
+@torchdata_available
 def test_dataloader2_creator_str(datapipe: DataPipe) -> None:
     assert str(DataLoader2Creator(datapipe)).startswith("DataLoader2Creator(")
 
 
+@torchdata_available
 def test_dataloader2_creator_datapipe(datapipe: DataPipe) -> None:
     dataloader = DataLoader2Creator(datapipe).create()
     assert isinstance(dataloader, DataLoader2)
@@ -39,6 +42,7 @@ def test_dataloader2_creator_datapipe(datapipe: DataPipe) -> None:
     assert tuple(dataloader) == (1, 2, 3, 4, 5)
 
 
+@torchdata_available
 def test_dataloader2_creator_datapipe_creator(datapipe: DataPipe) -> None:
     dataloader = DataLoader2Creator(
         ChainedDataPipeCreator(
@@ -55,6 +59,7 @@ def test_dataloader2_creator_datapipe_creator(datapipe: DataPipe) -> None:
     assert tuple(dataloader) == (1, 2, 3, 4, 5)
 
 
+@torchdata_available
 @mark.parametrize(
     "datapipe_adapter_fn",
     (
@@ -74,6 +79,7 @@ def test_dataloader2_creator_datapipe_adapter_fn(
     assert set(dataloader) == {1, 2, 3, 4, 5}
 
 
+@torchdata_available
 @mark.parametrize(
     "reading_service",
     (
