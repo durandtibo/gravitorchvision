@@ -3,9 +3,10 @@ __all__ = [
     "EpochRandomSeedDataPipeCreator",
     "ChainedDataPipeCreator",
     "create_chained_datapipe",
+    "setup_datapipe_creator",
 ]
 
-from gtvision.creators.datapipe.base import BaseDataPipeCreator
+from gtvision.creators.datapipe.base import BaseDataPipeCreator, setup_datapipe_creator
 from gtvision.creators.datapipe.chained import (
     ChainedDataPipeCreator,
     create_chained_datapipe,
