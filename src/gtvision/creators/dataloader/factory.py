@@ -1,0 +1,39 @@
+r"""This module defines some utility functions for the data loader
+creators."""
+
+from __future__ import annotations
+
+__all__ = ["setup_data_loader_creator"]
+
+import logging
+
+from gravitorch.utils.format import str_target_object
+
+from gtvision.creators.dataloader.base import BaseDataLoaderCreator
+
+logger = logging.getLogger(__name__)
+
+
+def setup_data_loader_creator(
+    creator: BaseDataLoaderCreator | dict | None,
+) -> BaseDataLoaderCreator:
+    r"""Sets up a data loader creator.
+
+    Args:
+    ----
+        creator (``BaseDataLoaderCreator`` or dict or None):
+            Specifies the data loader creator or its configuration.
+            If ``None``, a data loader creator will be created
+            automatically.
+
+    Returns:
+    -------
+        ``BaseDataLoaderCreator``: The data loader creator.
+    """
+    if isinstance(creator, dict):
+        logger.info(
+            "Initializing a data loader creator from its configuration... "
+            f"{str_target_object(creator)}"
+        )
+        creator = BaseDataLoaderCreator.factory(**creator)
+    return creator
