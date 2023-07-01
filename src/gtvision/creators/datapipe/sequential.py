@@ -1,0 +1,160 @@
+from __future__ import annotations
+
+__all__ = ["SequentialDataPipeCreator"]
+
+from collections.abc import Sequence
+
+from gravitorch.engines.base import BaseEngine
+from gravitorch.utils.format import str_indent, str_torch_sequence
+from torch.utils.data.graph import DataPipe
+
+from gtvision.creators.datapipe.base import BaseDataPipeCreator, setup_datapipe_creator
+
+
+class SequentialDataPipeCreator(BaseDataPipeCreator):
+    r"""Implements an ``DataPipe`` creator to create an ``DataPipe``
+    object by using a sequence ``DataPipe`` creators.
+
+    Args:
+    ----
+        creators: Specifies the sequence of ``DataPipe`` creators
+            or their configurations. The sequence of creators follows
+            the order of the ``DataPipe``s. The first creator is
+            used to create the first ``DataPipe`` (a.k.a. source),
+            and the last creator is used to create the last
+            ``DataPipe`` (a.k.a. sink). This creator assumes all
+            the DataPipes have a single source DataPipe as their first
+            argument, excepts for the source ``DataPipe``.
+    """
+
+    def __init__(self, creators: Sequence[BaseDataPipeCreator | dict]) -> None:
+        if not creators:
+            raise ValueError("It is not possible to create a DataPipe because creators is empty")
+        self._creators = [setup_datapipe_creator(creator) for creator in creators]
+
+    def __repr__(self) -> str:
+        return (
+            f"{self.__class__.__qualname__}(\n"
+            f"  {str_indent(str_torch_sequence(self._creators))},\n)"
+        )
+
+    def create(
+        self, engine: BaseEngine | None = None, source_inputs: Sequence | None = None
+    ) -> DataPipe:
+        r"""Creates an ``DataPipe`` object.
+
+        Args:
+        ----
+            engine (``BaseEngine`` or ``None``, optional): Specifies
+                an engine.
+                The engine is not used by this creator.
+                Default: ``None``
+            source_inputs (sequence or ``None``): Specifies the first
+                positional arguments of the source ``DataPipe``.
+                This argument can be used to create a new
+                ``DataPipe`` object, that takes existing
+                ``DataPipe`` objects as input.  See examples below
+                to see how to use it. If ``None``, ``source_inputs``
+                is setto an empty tuple. Default: ``None``
+
+        Returns:
+        -------
+            ``DataPipe``: The created ``DataPipe`` object.
+
+        Example usage:
+
+        .. code-block:: pycon
+
+            >>> from torch.utils.data.graph import DataPipe
+            >>> from objectory import OBJECT_TARGET
+            >>> from gtvision.creators.datapipe import (
+            ...     SequentialDataPipeCreator,
+            ...     ChainedDataPipeCreator,
+            ... )
+            # Create an DataPipe object using a single DataPipe creator and no source input
+            >>> creator = SequentialDataPipeCreator(
+            ...     [
+            ...         ChainedDataPipeCreator(
+            ...             {
+            ...                 OBJECT_TARGET: "torch.utils.data.datapipes.iter.IterableWrapper",
+            ...                 "iterable": [1, 2, 3, 4],
+            ...             },
+            ...         ),
+            ...     ]
+            ... )
+            >>> datapipe: DataPipe = creator.create()
+            >>> tuple(datapipe)
+            (1, 2, 3, 4)
+            # It is possible to use the source_inputs to create the same DataPipe object.
+            # The data is given by the source_inputs
+            >>> creator = SequentialDataPipeCreator(
+            ...     [
+            ...         ChainedDataPipeCreator(
+            ...             {OBJECT_TARGET: "torch.utils.data.datapipes.iter.IterableWrapper"},
+            ...         ),
+            ...     ]
+            ... )
+            >>> datapipe: DataPipe = creator.create(source_inputs=([1, 2, 3, 4],))
+            >>> tuple(datapipe)
+            (1, 2, 3, 4)
+            # Create an DataPipe object using two DataPipe creators and no source input
+            >>> creator = SequentialDataPipeCreator(
+            ...     [
+            ...         ChainedDataPipeCreator(
+            ...             {OBJECT_TARGET: "torch.utils.data.datapipes.iter.IterableWrapper"},
+            ...         ),
+            ...         ChainedDataPipeCreator(
+            ...             {
+            ...                 OBJECT_TARGET: "torch.utils.data.datapipes.iter.Batcher",
+            ...                 "batch_size": 2,
+            ...             },
+            ...         ),
+            ...     ]
+            ... )
+            >>> datapipe: DataPipe = creator.create()
+            >>> tuple(datapipe)
+            ([1, 2], [3, 4])
+            # It is possible to use the source_inputs to create the same DataPipe object.
+            # A source DataPipe object is specified by using source_inputs
+            >>> from gravitorch.datapipes.iter import SourceWrapper
+            >>> creator = SequentialDataPipeCreator(
+            ...     creators=[
+            ...         ChainedDataPipeCreator(
+            ...             {
+            ...                 OBJECT_TARGET: "torch.utils.data.datapipes.iter.Batcher",
+            ...                 "batch_size": 2,
+            ...             },
+            ...         ),
+            ...     ]
+            ... )
+            >>> datapipe: DataPipe = creator.create(source_inputs=[SourceWrapper(data=[1, 2, 3, 4])])
+            >>> tuple(datapipe)
+            ([1, 2], [3, 4])
+            # It is possible to create a sequential ``DataPipe`` object that takes several
+            # DataPipe objects as input.
+            >>> creator = SequentialDataPipeCreator(
+            ...     [
+            ...         ChainedDataPipeCreator(
+            ...             {OBJECT_TARGET: "torch.utils.data.datapipes.iter.Multiplexer"},
+            ...         ),
+            ...         ChainedDataPipeCreator(
+            ...             {
+            ...                 OBJECT_TARGET: "torch.utils.data.datapipes.iter.Batcher",
+            ...                 "batch_size": 2,
+            ...             },
+            ...         ),
+            ...     ]
+            ... )
+            >>> datapipe: DataPipe = creator.create(
+            ...     source_inputs=[
+            ...         SourceWrapper(data=[1, 2, 3, 4]),
+            ...         SourceWrapper(data=[11, 12, 13, 14]),
+            ...     ],
+            ... )
+            >>> tuple(datapipe)
+            ([1, 11], [2, 12], [3, 13], [4, 14])
+        """
+        datapipe = self._creators[0].create(engine=engine, source_inputs=source_inputs)
+        for creator in self._creators[1:]:
+            datapipe = creator.create(engine=engine, source_inputs=(datapipe,))
+        return datapipe
