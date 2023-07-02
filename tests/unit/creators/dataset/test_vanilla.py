@@ -1,6 +1,7 @@
 from unittest.mock import Mock
 
 from gravitorch.data.datasets import DummyMultiClassDataset
+from objectory import OBJECT_TARGET
 from torch.utils.data import Dataset
 
 from gtvision.creators.dataset import DatasetCreator
@@ -22,7 +23,7 @@ def test_dataset_creator_create_dataset_object() -> None:
 def test_dataset_creator_create_dataset_config() -> None:
     dataset = DatasetCreator(
         {
-            "_target_": "gravitorch.data.datasets.DummyMultiClassDataset",
+            OBJECT_TARGET: "gravitorch.data.datasets.DummyMultiClassDataset",
             "num_examples": 10,
             "num_classes": 2,
             "feature_size": 4,
@@ -34,7 +35,7 @@ def test_dataset_creator_create_dataset_config() -> None:
 def test_dataset_creator_create_dataset_cache_true() -> None:
     creator = DatasetCreator(
         {
-            "_target_": "gravitorch.data.datasets.DummyMultiClassDataset",
+            OBJECT_TARGET: "gravitorch.data.datasets.DummyMultiClassDataset",
             "num_examples": 10,
             "num_classes": 2,
             "feature_size": 4,
@@ -50,7 +51,7 @@ def test_dataset_creator_create_dataset_cache_true() -> None:
 def test_dataset_creator_create_dataset_cache_false() -> None:
     creator = DatasetCreator(
         {
-            "_target_": "gravitorch.data.datasets.DummyMultiClassDataset",
+            OBJECT_TARGET: "gravitorch.data.datasets.DummyMultiClassDataset",
             "num_examples": 10,
             "num_classes": 2,
             "feature_size": 4,
