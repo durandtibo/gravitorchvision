@@ -17,12 +17,14 @@ def dataset() -> Dataset:
 
 
 def test_setup_data_loader_creator_object(dataset: Dataset) -> None:
-    data_loader_creator = DataLoaderCreator(dataset)
-    assert setup_data_loader_creator(data_loader_creator) is data_loader_creator
+    creator = DataLoaderCreator(dataset)
+    assert setup_data_loader_creator(creator) is creator
 
 
 def test_setup_data_loader_creator_config(dataset: Dataset) -> None:
-    data_loader_creator = setup_data_loader_creator(
-        {OBJECT_TARGET: "gtvision.creators.dataloader.DataLoaderCreator", "dataset": dataset}
+    assert isinstance(
+        setup_data_loader_creator(
+            {OBJECT_TARGET: "gtvision.creators.dataloader.DataLoaderCreator", "dataset": dataset}
+        ),
+        DataLoaderCreator,
     )
-    assert isinstance(data_loader_creator, DataLoaderCreator)

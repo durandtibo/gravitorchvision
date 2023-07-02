@@ -5,15 +5,16 @@ __all__ = ["DistributedDataLoaderCreator"]
 from typing import TypeVar
 
 from gravitorch.data.dataloaders import create_dataloader
+from gravitorch.data.datasets import is_dataset_config
 from gravitorch.distributed import comm as dist
 from gravitorch.engines.base import BaseEngine
-from gravitorch.utils import setup_object
 from gravitorch.utils.format import str_indent, str_pretty_dict
 from gravitorch.utils.seed import get_torch_generator
 from torch.utils.data import DataLoader, Dataset, DistributedSampler
 
 from gtvision.creators.dataloader.base import BaseDataLoaderCreator
-from gtvision.creators.dataset.base import BaseDatasetCreator
+from gtvision.creators.dataset.base import BaseDatasetCreator, setup_dataset_creator
+from gtvision.creators.dataset.vanilla import DatasetCreator
 
 T = TypeVar("T")
 
@@ -52,7 +53,11 @@ class DistributedDataLoaderCreator(BaseDataLoaderCreator[T]):
         seed: int = 0,
         **kwargs,
     ) -> None:
-        self._dataset: Dataset | BaseDatasetCreator = setup_object(dataset)
+        if isinstance(dataset, Dataset) or (
+            isinstance(dataset, dict) and is_dataset_config(dataset)
+        ):
+            dataset = DatasetCreator(dataset)
+        self._dataset = setup_dataset_creator(dataset)
         self._shuffle = bool(shuffle)
         self._drop_last = bool(drop_last)
         self._seed = int(seed)
@@ -71,10 +76,7 @@ class DistributedDataLoaderCreator(BaseDataLoaderCreator[T]):
         )
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader[T]:
-        dataset = self._dataset
-        if isinstance(dataset, BaseDatasetCreator):
-            dataset = dataset.create(engine)
-
+        dataset = self._dataset.create(engine)
         sampler = DistributedSampler(
             dataset,
             shuffle=self._shuffle,

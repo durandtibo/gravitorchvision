@@ -276,3 +276,79 @@ def test_distributed_dataloader_creator_num_replicas_2_ranks(dataset: Dataset) -
         for batch in DistributedDataLoaderCreator(dataset, batch_size=1).create():
             indices.add(batch[0, 0].item())
     assert len(indices) == 20
+
+
+def test_distributed_dataloader_creator_dataset_repeat(dataset: Dataset) -> None:
+    creator = DistributedDataLoaderCreator(dataset, batch_size=4, shuffle=True)
+    dataloader1 = creator.create()
+    assert isinstance(dataloader1, DataLoader)
+    dataloader2 = creator.create()
+    assert isinstance(dataloader2, DataLoader)
+
+    assert dataloader1.dataset is dataloader2.dataset
+    assert objects_are_equal(tuple(dataloader1), tuple(dataloader2))
+
+
+def test_distributed_dataloader_creator_dataset_config_repeat() -> None:
+    creator = DistributedDataLoaderCreator(
+        {
+            OBJECT_TARGET: "gravitorch.data.datasets.DummyMultiClassDataset",
+            "num_examples": 10,
+            "num_classes": 2,
+            "feature_size": 4,
+        },
+        batch_size=4,
+        shuffle=True,
+    )
+    dataloader1 = creator.create()
+    assert isinstance(dataloader1, DataLoader)
+    dataloader2 = creator.create()
+    assert isinstance(dataloader2, DataLoader)
+
+    assert dataloader1.dataset is dataloader2.dataset
+    assert objects_are_equal(tuple(dataloader1), tuple(dataloader2))
+
+
+def test_distributed_dataloader_creator_dataset_creator_repeat_caching() -> None:
+    creator = DistributedDataLoaderCreator(
+        DatasetCreator(
+            {
+                OBJECT_TARGET: "gravitorch.data.datasets.DummyMultiClassDataset",
+                "num_examples": 10,
+                "num_classes": 2,
+                "feature_size": 4,
+            },
+        ),
+        batch_size=4,
+        shuffle=True,
+    )
+    dataloader1 = creator.create()
+    assert isinstance(dataloader1, DataLoader)
+    dataloader2 = creator.create()
+    assert isinstance(dataloader2, DataLoader)
+
+    assert dataloader1.dataset is dataloader2.dataset
+    assert objects_are_equal(tuple(dataloader1), tuple(dataloader2))
+
+
+def test_distributed_dataloader_creator_dataset_creator_repeat_no_caching() -> None:
+    creator = DistributedDataLoaderCreator(
+        DatasetCreator(
+            {
+                OBJECT_TARGET: "gravitorch.data.datasets.DummyMultiClassDataset",
+                "num_examples": 10,
+                "num_classes": 2,
+                "feature_size": 4,
+            },
+            cache=False,
+        ),
+        batch_size=4,
+        shuffle=True,
+    )
+    dataloader1 = creator.create()
+    assert isinstance(dataloader1, DataLoader)
+    dataloader2 = creator.create()
+    assert isinstance(dataloader2, DataLoader)
+
+    assert dataloader1.dataset is not dataloader2.dataset
+    assert objects_are_equal(tuple(dataloader1), tuple(dataloader2))
