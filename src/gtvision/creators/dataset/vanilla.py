@@ -32,10 +32,15 @@ class DatasetCreator(BaseDatasetCreator[T]):
         self._cache = bool(cache)
 
     def __str__(self) -> str:
-        return f"{self.__class__.__qualname__}(\n  dataset={str_indent(self._dataset)}\n)"
+        return (
+            f"{self.__class__.__qualname__}(\n"
+            f"  dataset={str_indent(self._dataset)}\n"
+            f"  cache={self._cache},"
+            ")"
+        )
 
     def create(self, engine: BaseEngine | None = None) -> Dataset[T]:
-        dataset: Dataset[T] = setup_dataset(self._dataset)
+        dataset = setup_dataset(self._dataset)
         if self._cache and not isinstance(self._dataset, Dataset):
             self._dataset = dataset
         return dataset

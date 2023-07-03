@@ -20,7 +20,7 @@ def test_setup_dataset_creator_dict() -> None:
                 OBJECT_TARGET: "gtvision.creators.dataset.DatasetCreator",
                 "dataset": {
                     OBJECT_TARGET: "gravitorch.data.datasets.ExampleDataset",
-                    "iterable": (1, 2, 3, 4, 5),
+                    "examples": (1, 2, 3, 4, 5),
                 },
             },
         ),

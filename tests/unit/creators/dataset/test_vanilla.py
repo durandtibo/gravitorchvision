@@ -21,15 +21,17 @@ def test_dataset_creator_create_dataset_object() -> None:
 
 
 def test_dataset_creator_create_dataset_config() -> None:
-    dataset = DatasetCreator(
-        {
-            OBJECT_TARGET: "gravitorch.data.datasets.DummyMultiClassDataset",
-            "num_examples": 10,
-            "num_classes": 2,
-            "feature_size": 4,
-        }
-    ).create()
-    assert isinstance(dataset, DummyMultiClassDataset)
+    assert isinstance(
+        DatasetCreator(
+            {
+                OBJECT_TARGET: "gravitorch.data.datasets.DummyMultiClassDataset",
+                "num_examples": 10,
+                "num_classes": 2,
+                "feature_size": 4,
+            }
+        ).create(),
+        DummyMultiClassDataset,
+    )
 
 
 def test_dataset_creator_create_dataset_cache_true() -> None:
