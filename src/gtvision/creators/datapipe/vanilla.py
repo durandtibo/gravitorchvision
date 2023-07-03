@@ -20,7 +20,7 @@ class DataPipeCreator(BaseDataPipeCreator[T]):
 
     Args:
     ----
-        datapipe (``torch.utils.data.graph.DataPipe`` or dict):
+        datapipe (``IterDataPipe`` or ``MapDataPipe`` or dict):
             Specifies the ``DataPipe`` or its configuration.
         cache (bool, optional): If ``True``, the ``DataPipe`` is
             created only the first time, and then the same
