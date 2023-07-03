@@ -1,6 +1,7 @@
 __all__ = [
     "BaseDataPipeCreator",
     "ChainedDataPipeCreator",
+    "DataPipeCreator",
     "EpochRandomSeedDataPipeCreator",
     "SequentialDataPipeCreator",
     "create_chained_datapipe",
@@ -14,3 +15,4 @@ from gtvision.creators.datapipe.chained import (
 )
 from gtvision.creators.datapipe.random import EpochRandomSeedDataPipeCreator
 from gtvision.creators.datapipe.sequential import SequentialDataPipeCreator
+from gtvision.creators.datapipe.vanilla import DataPipeCreator
