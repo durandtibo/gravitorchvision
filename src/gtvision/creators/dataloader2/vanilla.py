@@ -10,7 +10,7 @@ from gravitorch.engines import BaseEngine
 from gravitorch.utils import setup_object
 from gravitorch.utils.format import str_indent, str_pretty_dict
 from gravitorch.utils.imports import is_torchdata_available
-from torch.utils.data.graph import DataPipe
+from torch.utils.data import IterDataPipe, MapDataPipe
 
 from gtvision.creators.dataloader2.base import BaseDataLoader2Creator
 from gtvision.creators.datapipe.base import BaseDataPipeCreator
@@ -31,7 +31,8 @@ class DataLoader2Creator(BaseDataLoader2Creator[T]):
 
     Args:
     ----
-        datapipe (``torch.utils.data.graph.DataPipe``): Specifies a
+        datapipe (``IterDataPipe`` or ``MapDataPipe`` or
+            ``BaseDataPipeCreator`` or dict): Specifies a
             datapipe (or its configuration) or a datapipe creator
             (or its configuration).
         datapipe_adapter_fn: Specifies the ``Adapter`` function(s)
@@ -43,7 +44,7 @@ class DataLoader2Creator(BaseDataLoader2Creator[T]):
 
     def __init__(
         self,
-        datapipe: DataPipe | BaseDataPipeCreator | dict,
+        datapipe: IterDataPipe[T] | MapDataPipe[T] | BaseDataPipeCreator[T] | dict,
         datapipe_adapter_fn: Iterable[Adapter | dict] | Adapter | dict | None = None,
         reading_service: ReadingServiceInterface | dict | None = None,
     ) -> None:

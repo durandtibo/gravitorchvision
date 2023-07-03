@@ -9,7 +9,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 
 from gravitorch.utils.format import str_target_object
 from objectory import AbstractFactory
-from torch.utils.data.graph import DataPipe
+from torch.utils.data import IterDataPipe, MapDataPipe
 
 if TYPE_CHECKING:
     from gravitorch.engines import BaseEngine
@@ -41,7 +41,7 @@ class BaseDataPipeCreator(Generic[T], ABC, metaclass=AbstractFactory):
     @abstractmethod
     def create(
         self, engine: BaseEngine | None = None, source_inputs: Sequence | None = None
-    ) -> DataPipe[T]:
+    ) -> IterDataPipe[T] | MapDataPipe[T]:
         r"""Create a ``DataPipe``.
 
         Args:
@@ -58,7 +58,8 @@ class BaseDataPipeCreator(Generic[T], ABC, metaclass=AbstractFactory):
 
         Returns:
         -------
-            ``DataPipe``: The created ``DataPipe``.
+            ``IterDataPipe`` or ``MapDataPipe``: The created
+                ``DataPipe``.
         """
 
 
