@@ -10,8 +10,8 @@ from gravitorch.utils.format import str_indent
 from torch.utils.data import DataLoader, Dataset
 
 from gtvision.creators.dataloader.base import BaseDataLoaderCreator
+from gtvision.creators.dataloader.dataset import DataLoaderCreator
 from gtvision.creators.dataloader.distributed import DistributedDataLoaderCreator
-from gtvision.creators.dataloader.vanilla import DataLoaderCreator
 from gtvision.creators.dataset.base import BaseDatasetCreator
 
 T = TypeVar("T")
