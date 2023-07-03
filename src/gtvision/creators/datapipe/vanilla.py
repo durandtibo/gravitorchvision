@@ -9,7 +9,6 @@ from gravitorch.datapipes import clone_datapipe, setup_datapipe
 from gravitorch.engines.base import BaseEngine
 from gravitorch.utils.format import str_indent
 from torch.utils.data import IterDataPipe, MapDataPipe
-from torch.utils.data.graph import DataPipe
 
 from gtvision.creators.datapipe.base import BaseDataPipeCreator
 
@@ -35,7 +34,10 @@ class DataPipeCreator(BaseDataPipeCreator[T]):
     """
 
     def __init__(
-        self, datapipe: DataPipe[T] | dict, cache: bool = True, deepcopy: bool = False
+        self,
+        datapipe: IterDataPipe[T] | MapDataPipe[T] | dict,
+        cache: bool = True,
+        deepcopy: bool = False,
     ) -> None:
         self._datapipe = datapipe
         self._cache = bool(cache)
@@ -52,7 +54,7 @@ class DataPipeCreator(BaseDataPipeCreator[T]):
 
     def create(
         self, engine: BaseEngine | None = None, source_inputs: Sequence | None = None
-    ) -> DataPipe[T]:
+    ) -> IterDataPipe[T] | MapDataPipe[T]:
         datapipe = setup_datapipe(self._datapipe)
         if self._cache and not isinstance(self._datapipe, (IterDataPipe, MapDataPipe)):
             self._datapipe = datapipe
