@@ -20,7 +20,7 @@ class MNISTDataSource(DatasetDataSource):
     ----
         path (str, optional): Specifies the path where to save/load
             the MNIST data.
-        data_loader_creators (dict): Specifies the data loader
+        dataloader_creators (dict): Specifies the data loader
             creators to initialize. Each key indicates a data loader
             creator name. The value can be a ``BaseDataLoaderCreator``
             object, or its configuration, or ``None``. ``None`` means
@@ -37,7 +37,7 @@ class MNISTDataSource(DatasetDataSource):
     def __init__(
         self,
         path: Path | str,
-        data_loader_creators: dict[str, BaseDataLoaderCreator | dict | None],
+        dataloader_creators: dict[str, BaseDataLoaderCreator | dict | None],
         download: bool = False,
     ) -> None:
         super().__init__(
@@ -45,5 +45,5 @@ class MNISTDataSource(DatasetDataSource):
                 ct.TRAIN: MNIST.create_with_default_transforms(path, train=True, download=download),
                 ct.EVAL: MNIST.create_with_default_transforms(path, train=False, download=download),
             },
-            data_loader_creators=data_loader_creators,
+            dataloader_creators=dataloader_creators,
         )

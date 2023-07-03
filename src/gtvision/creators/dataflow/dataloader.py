@@ -12,7 +12,7 @@ from torch.utils.data import DataLoader
 from gtvision.creators.dataflow.base import BaseDataFlowCreator
 from gtvision.creators.dataloader import (
     VanillaDataLoaderCreator,
-    setup_data_loader_creator,
+    setup_dataloader_creator,
 )
 from gtvision.creators.dataloader.base import BaseDataLoaderCreator
 
@@ -34,7 +34,7 @@ class DataLoaderDataFlowCreator(BaseDataFlowCreator):
             isinstance(dataloader, dict) and is_dataloader_config(dataloader)
         ):
             dataloader = VanillaDataLoaderCreator(dataloader)
-        self._dataloader = setup_data_loader_creator(dataloader)
+        self._dataloader = setup_dataloader_creator(dataloader)
 
     def __str__(self) -> str:
         return f"{self.__class__.__qualname__}()"

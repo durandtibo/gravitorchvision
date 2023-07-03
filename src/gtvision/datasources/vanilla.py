@@ -67,10 +67,10 @@ class VanillaDataSource(BaseDataSource):
     def has_asset(self, asset_id: str) -> bool:
         return self._asset_manager.has_asset(asset_id)
 
-    def get_data_loader(self, loader_id: str, engine: BaseEngine | None = None) -> BaseDataFlow:
-        if not self.has_data_loader(loader_id):
+    def get_dataloader(self, loader_id: str, engine: BaseEngine | None = None) -> BaseDataFlow:
+        if not self.has_dataloader(loader_id):
             raise LoaderNotFoundError(f"{loader_id} does not exist")
         return self._dataflow_creators[loader_id].create(engine=engine)
 
-    def has_data_loader(self, loader_id: str) -> bool:
+    def has_dataloader(self, loader_id: str) -> bool:
         return loader_id in self._dataflow_creators
