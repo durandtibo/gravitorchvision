@@ -4,15 +4,19 @@ __all__ = ["EpochRandomSeedDataPipeCreator"]
 
 import logging
 from collections.abc import Sequence
+from typing import TypeVar
 
 from gravitorch import distributed as dist
 from gravitorch.engines.base import BaseEngine
 from objectory import OBJECT_TARGET, factory
-from torch.utils.data.graph import DataPipe
+from torch.utils.data import IterDataPipe, MapDataPipe
 
 from gtvision.creators.datapipe.base import BaseDataPipeCreator
 
 logger = logging.getLogger(__name__)
+
+
+T = TypeVar("T")
 
 
 class EpochRandomSeedDataPipeCreator(BaseDataPipeCreator):
@@ -46,7 +50,7 @@ class EpochRandomSeedDataPipeCreator(BaseDataPipeCreator):
 
     def create(
         self, engine: BaseEngine | None = None, source_inputs: Sequence | None = None
-    ) -> DataPipe:
+    ) -> IterDataPipe[T] | MapDataPipe[T]:
         if engine is None:
             raise RuntimeError(
                 "engine cannot be None because the epoch value is used to create the "

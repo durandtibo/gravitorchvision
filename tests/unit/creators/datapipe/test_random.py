@@ -3,7 +3,7 @@ from unittest.mock import Mock, patch
 from gravitorch.engines import BaseEngine
 from objectory import OBJECT_TARGET
 from pytest import raises
-from torch.utils.data.graph import DataPipe
+from torch.utils.data import IterDataPipe
 
 from gtvision.creators.datapipe import EpochRandomSeedDataPipeCreator
 
@@ -23,7 +23,7 @@ def test_epoch_random_seed_data_pipe_creator_create_engine_none() -> None:
 
 @patch("gtvision.creators.datapipe.random.dist.get_rank", lambda *args, **kwargs: 0)
 def test_epoch_random_seed_data_pipe_creator_create() -> None:
-    datapipe = Mock(spec=DataPipe)
+    datapipe = Mock(spec=IterDataPipe)
     factory_mock = Mock(return_value=datapipe)
     with patch("gtvision.creators.datapipe.random.factory", factory_mock):
         creator = EpochRandomSeedDataPipeCreator({OBJECT_TARGET: "MyDataPipe", "key": "value"})
@@ -36,7 +36,7 @@ def test_epoch_random_seed_data_pipe_creator_create() -> None:
 
 @patch("gtvision.creators.datapipe.random.dist.get_rank", lambda *args, **kwargs: 0)
 def test_epoch_random_seed_data_pipe_creator_create_with_source_inputs() -> None:
-    datapipe = Mock(spec=DataPipe)
+    datapipe = Mock(spec=IterDataPipe)
     factory_mock = Mock(return_value=datapipe)
     with patch("gtvision.creators.datapipe.random.factory", factory_mock):
         creator = EpochRandomSeedDataPipeCreator({OBJECT_TARGET: "MyDataPipe", "key": "value"})
@@ -56,7 +56,7 @@ def test_epoch_random_seed_data_pipe_creator_create_rank_0() -> None:
         EpochRandomSeedDataPipeCreator(
             {
                 OBJECT_TARGET: "gravitorch.datapipes.iter.TensorDictShuffler",
-                "datapipe": Mock(spec=DataPipe),
+                "datapipe": Mock(spec=IterDataPipe),
                 "random_seed": 42,
             }
         )
@@ -72,7 +72,7 @@ def test_epoch_random_seed_data_pipe_creator_get_random_seed_rank_1() -> None:
         EpochRandomSeedDataPipeCreator(
             {
                 OBJECT_TARGET: "gravitorch.datapipes.iter.TensorDictShuffler",
-                "datapipe": Mock(spec=DataPipe),
+                "datapipe": Mock(spec=IterDataPipe),
                 "random_seed": 42,
             }
         )
@@ -88,7 +88,7 @@ def test_epoch_random_seed_data_pipe_creator_create_no_random_seed() -> None:
         EpochRandomSeedDataPipeCreator(
             {
                 OBJECT_TARGET: "gravitorch.datapipes.iter.TensorDictShuffler",
-                "datapipe": Mock(spec=DataPipe),
+                "datapipe": Mock(spec=IterDataPipe),
             }
         )
         .create(engine=Mock(spec=BaseEngine, epoch=2, max_epochs=10, random_seed=35))

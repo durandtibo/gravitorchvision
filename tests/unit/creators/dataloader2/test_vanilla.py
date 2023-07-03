@@ -6,9 +6,9 @@ from gravitorch.testing import torchdata_available
 from gravitorch.utils.imports import is_torchdata_available
 from objectory import OBJECT_TARGET
 from pytest import fixture, mark
+from torch.utils.data import IterDataPipe
 from torch.utils.data.datapipes.iter import IterableWrapper
 from torch.utils.data.datapipes.iter.combinatorics import ShufflerIterDataPipe
-from torch.utils.data.graph import DataPipe
 
 from gtvision.creators.dataloader2 import DataLoader2Creator
 from gtvision.creators.datapipe import ChainedDataPipeCreator
@@ -26,7 +26,7 @@ else:  # pragma: no cover
 
 
 @fixture
-def datapipe() -> DataPipe:
+def datapipe() -> IterDataPipe:
     return IterableWrapper([1, 2, 3, 4, 5])
 
 
@@ -36,12 +36,12 @@ def datapipe() -> DataPipe:
 
 
 @torchdata_available
-def test_dataloader2_creator_str(datapipe: DataPipe) -> None:
+def test_dataloader2_creator_str(datapipe: IterDataPipe) -> None:
     assert str(DataLoader2Creator(datapipe)).startswith("DataLoader2Creator(")
 
 
 @torchdata_available
-def test_dataloader2_creator_datapipe(datapipe: DataPipe) -> None:
+def test_dataloader2_creator_datapipe(datapipe: IterDataPipe) -> None:
     dataloader = DataLoader2Creator(datapipe).create()
     assert isinstance(dataloader, DataLoader2)
     assert isinstance(dataloader.datapipe, IterableWrapper)
@@ -51,7 +51,7 @@ def test_dataloader2_creator_datapipe(datapipe: DataPipe) -> None:
 
 
 @torchdata_available
-def test_dataloader2_creator_datapipe_creator(datapipe: DataPipe) -> None:
+def test_dataloader2_creator_datapipe_creator(datapipe: IterDataPipe) -> None:
     dataloader = DataLoader2Creator(
         ChainedDataPipeCreator(
             {
@@ -76,7 +76,7 @@ def test_dataloader2_creator_datapipe_creator(datapipe: DataPipe) -> None:
     ),
 )
 def test_dataloader2_creator_datapipe_adapter_fn(
-    datapipe: DataPipe, datapipe_adapter_fn: Adapter | dict
+    datapipe: IterDataPipe, datapipe_adapter_fn: Adapter | dict
 ) -> None:
     dataloader = DataLoader2Creator(datapipe, datapipe_adapter_fn=datapipe_adapter_fn).create()
     assert isinstance(dataloader, DataLoader2)
@@ -96,7 +96,7 @@ def test_dataloader2_creator_datapipe_adapter_fn(
     ),
 )
 def test_dataloader2_creator_reading_service(
-    datapipe: DataPipe,
+    datapipe: IterDataPipe,
     reading_service: ReadingServiceInterface | dict,
 ) -> None:
     dataloader = DataLoader2Creator(datapipe, reading_service=reading_service).create()
