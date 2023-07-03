@@ -60,46 +60,46 @@ def test_vanilla_data_source_has_asset_false(datasource: VanillaDataSource) -> N
     assert not datasource.has_asset("something")
 
 
-def test_vanilla_data_source_get_data_loader_train(datasource: VanillaDataSource) -> None:
-    dataflow = datasource.get_data_loader("train")
+def test_vanilla_data_source_get_dataloader_train(datasource: VanillaDataSource) -> None:
+    dataflow = datasource.get_dataloader("train")
     assert isinstance(dataflow, IterableDataFlow)
     with dataflow as flow:
         assert tuple(flow) == (1, 2, 3, 4)
 
 
-def test_vanilla_data_source_get_data_loader_eval(datasource: VanillaDataSource) -> None:
-    dataflow = datasource.get_data_loader("eval")
+def test_vanilla_data_source_get_dataloader_eval(datasource: VanillaDataSource) -> None:
+    dataflow = datasource.get_dataloader("eval")
     assert isinstance(dataflow, IterableDataFlow)
     with dataflow as flow:
         assert tuple(flow) == ("a", "b", "c")
 
 
-def test_vanilla_data_source_get_data_loader_missing(datasource: VanillaDataSource) -> None:
+def test_vanilla_data_source_get_dataloader_missing(datasource: VanillaDataSource) -> None:
     with raises(LoaderNotFoundError):
-        datasource.get_data_loader("missing")
+        datasource.get_dataloader("missing")
 
 
-def test_vanilla_data_source_get_data_loader_with_engine() -> None:
+def test_vanilla_data_source_get_dataloader_with_engine() -> None:
     engine = Mock(spec=BaseEngine)
     dataflow_creator = Mock(spec=BaseDataFlowCreator, create=Mock(return_value=["a", "b", "c"]))
     datasource = VanillaDataSource({"train": dataflow_creator})
-    datasource.get_data_loader("train", engine=engine)
+    datasource.get_dataloader("train", engine=engine)
     dataflow_creator.create.assert_called_once_with(engine=engine)
 
 
-def test_vanilla_data_source_get_data_loader_without_engine() -> None:
+def test_vanilla_data_source_get_dataloader_without_engine() -> None:
     dataflow_creator = Mock(spec=BaseDataFlowCreator, create=Mock(return_value=["a", "b", "c"]))
     datasource = VanillaDataSource({"train": dataflow_creator})
-    datasource.get_data_loader("train")
+    datasource.get_dataloader("train")
     dataflow_creator.create.assert_called_once_with(engine=None)
 
 
-def test_vanilla_data_source_has_data_loader_true(datasource: VanillaDataSource) -> None:
-    assert datasource.has_data_loader("train")
+def test_vanilla_data_source_has_dataloader_true(datasource: VanillaDataSource) -> None:
+    assert datasource.has_dataloader("train")
 
 
-def test_vanilla_data_source_has_data_loader_false(datasource: VanillaDataSource) -> None:
-    assert not datasource.has_data_loader("missing")
+def test_vanilla_data_source_has_dataloader_false(datasource: VanillaDataSource) -> None:
+    assert not datasource.has_dataloader("missing")
 
 
 def test_vanilla_data_source_load_state_dict(datasource: VanillaDataSource) -> None:

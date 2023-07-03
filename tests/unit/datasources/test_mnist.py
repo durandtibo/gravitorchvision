@@ -32,43 +32,43 @@ def mnist_path(tmp_path_factory: TempPathFactory) -> Path:
 
 def test_mnist_data_source_str(mnist_path: Path) -> None:
     assert str(
-        MNISTDataSource(path=mnist_path, data_loader_creators={ct.TRAIN: None, ct.EVAL: None})
+        MNISTDataSource(path=mnist_path, dataloader_creators={ct.TRAIN: None, ct.EVAL: None})
     ).startswith("MNISTDataSource(")
 
 
 def test_mnist_data_source_attach(mnist_path: Path) -> None:
-    MNISTDataSource(path=mnist_path, data_loader_creators={ct.TRAIN: None, ct.EVAL: None}).attach(
+    MNISTDataSource(path=mnist_path, dataloader_creators={ct.TRAIN: None, ct.EVAL: None}).attach(
         engine=Mock()
     )
 
 
-def test_mnist_data_source_get_data_loader_train(mnist_path: Path) -> None:
+def test_mnist_data_source_get_dataloader_train(mnist_path: Path) -> None:
     data_source = MNISTDataSource(
-        path=mnist_path, data_loader_creators={ct.TRAIN: None, ct.EVAL: None}
+        path=mnist_path, dataloader_creators={ct.TRAIN: None, ct.EVAL: None}
     )
-    assert isinstance(data_source.get_data_loader(ct.TRAIN), DataLoader)
+    assert isinstance(data_source.get_dataloader(ct.TRAIN), DataLoader)
 
 
-def test_mnist_data_source_get_data_loader_eval(mnist_path: Path) -> None:
+def test_mnist_data_source_get_dataloader_eval(mnist_path: Path) -> None:
     data_source = MNISTDataSource(
-        path=mnist_path, data_loader_creators={ct.TRAIN: None, ct.EVAL: None}
+        path=mnist_path, dataloader_creators={ct.TRAIN: None, ct.EVAL: None}
     )
-    assert isinstance(data_source.get_data_loader(ct.EVAL), DataLoader)
+    assert isinstance(data_source.get_dataloader(ct.EVAL), DataLoader)
 
 
-def test_mnist_data_source_get_data_loader_batch_size_16(mnist_path: Path) -> None:
+def test_mnist_data_source_get_dataloader_batch_size_16(mnist_path: Path) -> None:
     data_source = MNISTDataSource(
         path=mnist_path,
-        data_loader_creators={ct.TRAIN: DataLoaderCreator(batch_size=16), ct.EVAL: None},
+        dataloader_creators={ct.TRAIN: DataLoaderCreator(batch_size=16), ct.EVAL: None},
     )
-    loader = data_source.get_data_loader(ct.TRAIN)
+    loader = data_source.get_dataloader(ct.TRAIN)
     assert isinstance(loader, DataLoader)
     assert loader.batch_size == 16
 
 
 def test_mnist_data_source_get_asset(mnist_path: Path) -> None:
     data_source = MNISTDataSource(
-        path=mnist_path, data_loader_creators={ct.TRAIN: None, ct.EVAL: None}
+        path=mnist_path, dataloader_creators={ct.TRAIN: None, ct.EVAL: None}
     )
     with raises(AssetNotFoundError, match="The asset 'something' does not exist"):
         data_source.get_asset("something")
@@ -76,20 +76,20 @@ def test_mnist_data_source_get_asset(mnist_path: Path) -> None:
 
 def test_mnist_data_source_has_asset(mnist_path: Path) -> None:
     data_source = MNISTDataSource(
-        path=mnist_path, data_loader_creators={ct.TRAIN: None, ct.EVAL: None}
+        path=mnist_path, dataloader_creators={ct.TRAIN: None, ct.EVAL: None}
     )
     assert not data_source.has_asset("something")
 
 
 def test_mnist_data_source_load_state_dict(mnist_path: Path) -> None:
     data_source = MNISTDataSource(
-        path=mnist_path, data_loader_creators={ct.TRAIN: None, ct.EVAL: None}
+        path=mnist_path, dataloader_creators={ct.TRAIN: None, ct.EVAL: None}
     )
     data_source.load_state_dict({})
 
 
 def test_mnist_data_source_state_dict(mnist_path: Path) -> None:
     data_source = MNISTDataSource(
-        path=mnist_path, data_loader_creators={ct.TRAIN: None, ct.EVAL: None}
+        path=mnist_path, dataloader_creators={ct.TRAIN: None, ct.EVAL: None}
     )
     assert data_source.state_dict() == {}
