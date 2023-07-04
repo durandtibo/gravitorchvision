@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from gravitorch.experimental.dataflow import IterableDataFlow
 
 from gtvision.creators.dataflow import IterableDataFlowCreator

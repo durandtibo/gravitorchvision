@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from objectory import OBJECT_TARGET
 
 from gtvision.creators.dataflow import IterableDataFlowCreator, setup_dataflow_creator
