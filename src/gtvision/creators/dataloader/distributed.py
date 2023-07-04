@@ -20,12 +20,12 @@ T = TypeVar("T")
 
 
 class DistributedDataLoaderCreator(BaseDataLoaderCreator[T]):
-    r"""Defines a simple distributed PyTorch data loader creator.
+    r"""Defines a simple distributed PyTorch dataloader creator.
 
-    This data loader creator uses the ``gravitorch.distributed`` package
-    to distribute the example per process. Note that this data loader
+    This dataloader creator uses the ``gravitorch.distributed`` package
+    to distribute the example per process. Note that this dataloader
     creator uses the default samplers. If you need a different sampler,
-    you will need to implement your own data loader creator.
+    you will need to implement your own dataloader creator.
 
     Args:
     ----

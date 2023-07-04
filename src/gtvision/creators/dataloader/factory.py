@@ -1,4 +1,4 @@
-r"""This module defines some utility functions for the data loader
+r"""This module defines some utility functions for the dataloader
 creators."""
 
 from __future__ import annotations
@@ -17,22 +17,22 @@ logger = logging.getLogger(__name__)
 def setup_dataloader_creator(
     creator: BaseDataLoaderCreator | dict | None,
 ) -> BaseDataLoaderCreator:
-    r"""Sets up a data loader creator.
+    r"""Sets up a dataloader creator.
 
     Args:
     ----
         creator (``BaseDataLoaderCreator`` or dict or None):
-            Specifies the data loader creator or its configuration.
-            If ``None``, a data loader creator will be created
+            Specifies the dataloader creator or its configuration.
+            If ``None``, a dataloader creator will be created
             automatically.
 
     Returns:
     -------
-        ``BaseDataLoaderCreator``: The data loader creator.
+        ``BaseDataLoaderCreator``: The dataloader creator.
     """
     if isinstance(creator, dict):
         logger.info(
-            "Initializing a data loader creator from its configuration... "
+            "Initializing a dataloader creator from its configuration... "
             f"{str_target_object(creator)}"
         )
         creator = BaseDataLoaderCreator.factory(**creator)
