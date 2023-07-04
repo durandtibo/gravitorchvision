@@ -16,7 +16,7 @@ from gtvision.creators.dataloader.base import BaseDataLoaderCreator
 T = TypeVar("T")
 
 
-class DataLoaderDataFlowCreator(BaseDataFlowCreator):
+class DataLoaderDataFlowCreator(BaseDataFlowCreator[T]):
     r"""Implements a simple ``DataLoaderDataFlow`` creator.
 
     Args:

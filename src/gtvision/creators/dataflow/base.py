@@ -45,7 +45,7 @@ class BaseDataFlowCreator(Generic[T], ABC, metaclass=AbstractFactory):
         """
 
 
-def setup_dataflow_creator(creator: BaseDataFlowCreator | dict) -> BaseDataFlowCreator:
+def setup_dataflow_creator(creator: BaseDataFlowCreator[T] | dict) -> BaseDataFlowCreator[T]:
     r"""Sets up the dataflow creator.
 
     The dataflow creator is instantiated from its configuration by
