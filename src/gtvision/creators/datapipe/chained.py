@@ -15,7 +15,7 @@ from gtvision.creators.datapipe.base import BaseDataPipeCreator
 T = TypeVar("T")
 
 
-class ChainedDataPipeCreator(BaseDataPipeCreator):
+class ChainedDataPipeCreator(BaseDataPipeCreator[T]):
     r"""Implements an ``DataPipe`` creator to create a chain of
     ``DataPipe``s from their configuration.
 

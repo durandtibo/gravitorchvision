@@ -390,13 +390,13 @@ testing = ["covdefaults (>=2.3)", "coverage (>=7.2.7)", "diff-cover (>=7.5)", "p
 
 [[package]]
 name = "gravitorch"
-version = "0.0.18a13"
+version = "0.0.18a14"
 description = "A library to train ML models with PyTorch"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "gravitorch-0.0.18a13-py3-none-any.whl", hash = "sha256:1a46690d38d22196792d8dcd0886ef4bfcf923b2ec1ba5e92df05c1597d2da86"},
-    {file = "gravitorch-0.0.18a13.tar.gz", hash = "sha256:409939dcbf13a22dc8d717220ebdc61dc62ae307245bc492f2a7d8c2178d6dd5"},
+    {file = "gravitorch-0.0.18a14-py3-none-any.whl", hash = "sha256:4c7da909d346da991b734014f0878a8d542cf83bd77f006f62a04c065d6f92a7"},
+    {file = "gravitorch-0.0.18a14.tar.gz", hash = "sha256:2215b81bce54396c20cb5efaf7dbb6e3fb9b74c07ad3d347e890742809f3b2d1"},
 ]
 
 [package.dependencies]
@@ -1479,4 +1479,4 @@ all = ["colorlog", "torchdata"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "4bdcb79030ec614bd64a5114fef2a271a73dcefeb9faf4fe22f76ff0ede606bb"
+content-hash = "622eda7919c6f505c61d07a001cfc864f42269370936600e1a8aadb06ce33bd4"
