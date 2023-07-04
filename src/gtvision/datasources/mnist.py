@@ -20,11 +20,11 @@ class MNISTDataSource(DatasetDataSource):
     ----
         path (str, optional): Specifies the path where to save/load
             the MNIST data.
-        dataloader_creators (dict): Specifies the data loader
-            creators to initialize. Each key indicates a data loader
+        dataloader_creators (dict): Specifies the dataloader
+            creators to initialize. Each key indicates a dataloader
             creator name. The value can be a ``BaseDataLoaderCreator``
             object, or its configuration, or ``None``. ``None`` means
-            a default data loader will be created. Each data loader
+            a default dataloader will be created. Each dataloader
             creator takes a ``Dataset`` object as input, so you need
             to specify a dataset with the same name. The expected
             keys are ``'train'`` and ``'eval'``.

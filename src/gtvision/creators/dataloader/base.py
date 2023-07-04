@@ -15,7 +15,7 @@ T = TypeVar("T")
 
 
 class BaseDataLoaderCreator(Generic[T], ABC, metaclass=AbstractFactory):
-    r"""Define the base class to implement a data loader creator.
+    r"""Define the base class to implement a dataloader creator.
 
     Example usage:
 
@@ -36,7 +36,7 @@ class BaseDataLoaderCreator(Generic[T], ABC, metaclass=AbstractFactory):
 
     @abstractmethod
     def create(self, engine: BaseEngine | None = None) -> DataLoader[T]:
-        r"""Create a data loader.
+        r"""Create a dataloader.
 
         Args:
         ----
@@ -45,5 +45,5 @@ class BaseDataLoaderCreator(Generic[T], ABC, metaclass=AbstractFactory):
 
         Returns:
         -------
-            ``torch.utils.data.DataLoader``: The created data loader.
+            ``torch.utils.data.DataLoader``: The created dataloader.
         """

@@ -10,10 +10,7 @@ from gravitorch.experimental.dataflow.dataloader import DataLoaderDataFlow
 from torch.utils.data import DataLoader
 
 from gtvision.creators.dataflow.base import BaseDataFlowCreator
-from gtvision.creators.dataloader import (
-    VanillaDataLoaderCreator,
-    setup_dataloader_creator,
-)
+from gtvision.creators.dataloader import DataLoaderCreator, setup_dataloader_creator
 from gtvision.creators.dataloader.base import BaseDataLoaderCreator
 
 T = TypeVar("T")
@@ -24,8 +21,8 @@ class DataLoaderDataFlowCreator(BaseDataFlowCreator):
 
     Args:
     ----
-        dataset (``torch.utils.data.DataLoader``): Specifies a
-            data loader (or its configuration) or a data loader
+        dataloader (``torch.utils.data.DataLoader``): Specifies a
+            dataloader (or its configuration) or a dataloader
             creator (or its configuration).
     """
 
@@ -33,7 +30,7 @@ class DataLoaderDataFlowCreator(BaseDataFlowCreator):
         if isinstance(dataloader, DataLoader) or (
             isinstance(dataloader, dict) and is_dataloader_config(dataloader)
         ):
-            dataloader = VanillaDataLoaderCreator(dataloader)
+            dataloader = DataLoaderCreator(dataloader)
         self._dataloader = setup_dataloader_creator(dataloader)
 
     def __str__(self) -> str:

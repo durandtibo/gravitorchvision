@@ -136,7 +136,7 @@ class ChainedDataPipeCreator(BaseDataPipeCreator):
         return create_chained_datapipe(config=self._config, source_inputs=source_inputs)
 
 
-def create_chained_datapipe(
+def create_chained_datapipe(  # TODO: remove and use gravitorch implementation
     config: dict | Sequence[dict],
     source_inputs: Sequence | None = None,
 ) -> IterDataPipe[T] | MapDataPipe[T]:

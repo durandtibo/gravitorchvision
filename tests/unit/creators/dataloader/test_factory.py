@@ -3,7 +3,10 @@ from objectory import OBJECT_TARGET
 from pytest import fixture
 from torch.utils.data import Dataset
 
-from gtvision.creators.dataloader import DataLoaderCreator, setup_dataloader_creator
+from gtvision.creators.dataloader import (
+    VanillaDataLoaderCreator,
+    setup_dataloader_creator,
+)
 
 
 @fixture
@@ -17,14 +20,17 @@ def dataset() -> Dataset:
 
 
 def test_setup_dataloader_creator_object(dataset: Dataset) -> None:
-    creator = DataLoaderCreator(dataset)
+    creator = VanillaDataLoaderCreator(dataset)
     assert setup_dataloader_creator(creator) is creator
 
 
 def test_setup_dataloader_creator_config(dataset: Dataset) -> None:
     assert isinstance(
         setup_dataloader_creator(
-            {OBJECT_TARGET: "gtvision.creators.dataloader.DataLoaderCreator", "dataset": dataset}
+            {
+                OBJECT_TARGET: "gtvision.creators.dataloader.VanillaDataLoaderCreator",
+                "dataset": dataset,
+            }
         ),
-        DataLoaderCreator,
+        VanillaDataLoaderCreator,
     )
