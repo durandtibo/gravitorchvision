@@ -13,7 +13,7 @@ from gtvision.creators.dataflow.base import BaseDataFlowCreator
 T = TypeVar("T")
 
 
-class IterableDataFlowCreator(BaseDataFlowCreator):
+class IterableDataFlowCreator(BaseDataFlowCreator[T]):
     r"""Implements a simple ``IterableDataFlow`` creator.
 
     Args:
