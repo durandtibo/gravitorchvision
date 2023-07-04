@@ -42,15 +42,17 @@ class DataLoader2Creator(BaseDataLoader2Creator[T]):
 
     .. code-block:: pycon
 
-        >>> from gtvision.creators.dataloader import DataLoaderCreator
-        >>> from gravitorch.data.datasets import ExampleDataset
-        >>> creator = DataLoaderCreator(
+        >>> from gtvision.creators.dataloader2 import DataLoader2Creator
+        >>> from torch.utils.data.datapipes.iter import IterableWrapper
+        >>> from torchdata.dataloader2 import DataLoader2
+        >>> creator = DataLoader2Creator(
         ...     {
-        ...         "_target_": "torch.utils.data.DataLoader",
-        ...         "dataset": ExampleDataset((1, 2, 3, 4)),
+        ...         "_target_": "torchdata.dataloader2.DataLoader2",
+        ...         "dataloader": DataLoader2(IterableWrapper((1, 2, 3, 4))),
         ...     },
         ... )
         >>> creator.create()
+        <torchdata.dataloader2.DataLoader2 object at 0x0123456789>
     """
 
     def __init__(self, dataloader: DataLoader2 | dict, cache: bool = True) -> None:
@@ -86,6 +88,16 @@ class VanillaDataLoader2Creator(BaseDataLoader2Creator[T]):
         reading_service: Defines how ``DataLoader2`` should execute
             operations over the ``DataPipe``, e.g.
             multiprocessing/distributed. Default: ``None``
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from torch.utils.data.datapipes.iter import IterableWrapper
+        >>> from gtvision.creators.dataloader2 import VanillaDataLoader2Creator
+        >>> creator = VanillaDataLoader2Creator(IterableWrapper([1, 2, 3, 4, 5]))
+        >>> creator.create()
+        <torchdata.dataloader2.DataLoader2 object at 0x0123456789>
     """
 
     def __init__(
