@@ -27,8 +27,8 @@ class BaseDataLoader2Creator(Generic[T], ABC, metaclass=AbstractFactory):
     .. code-block:: pycon
 
         >>> from torch.utils.data.datapipes.iter import IterableWrapper
-        >>> from gtvision.creators.dataloader2 import DataLoader2Creator
-        >>> creator = DataLoader2Creator(IterableWrapper([1, 2, 3, 4, 5]))
+        >>> from gtvision.creators.dataloader2 import VanillaDataLoader2Creator
+        >>> creator = VanillaDataLoader2Creator(IterableWrapper([1, 2, 3, 4, 5]))
         >>> creator.create()
         <torchdata.dataloader2.DataLoader2 object at 0x0123456789>
     """
