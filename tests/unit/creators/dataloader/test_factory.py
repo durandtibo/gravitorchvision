@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from gravitorch.data.datasets import ExampleDataset
 from objectory import OBJECT_TARGET
 from pytest import fixture

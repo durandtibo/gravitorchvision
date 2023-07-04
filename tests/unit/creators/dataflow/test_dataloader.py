@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from gravitorch.data.datasets import ExampleDataset
 from gravitorch.experimental.dataflow import DataLoaderDataFlow
 from torch.utils.data import DataLoader

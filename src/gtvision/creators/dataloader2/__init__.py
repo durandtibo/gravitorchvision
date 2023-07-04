@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 __all__ = ["BaseDataLoader2Creator", "DataLoader2Creator", "VanillaDataLoader2Creator"]
 
 from gtvision.creators.dataloader2.base import BaseDataLoader2Creator

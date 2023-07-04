@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from objectory import OBJECT_TARGET
 
 from gtvision.creators.datapipe import ChainedDataPipeCreator, setup_datapipe_creator
