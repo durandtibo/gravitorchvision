@@ -96,7 +96,7 @@ def test_auto_dataloader_creator_batch_size(dataset: Dataset, batch_size: int) -
 @patch("gtvision.creators.dataloader.distributed.dist.is_distributed", lambda *args: False)
 def test_auto_dataloader_creator_non_distributed(dataset: Dataset, batch_size: int) -> None:
     creator = AutoDataLoaderCreator(dataset, batch_size=batch_size)
-    assert isinstance(creator._creator, VanillaDataLoaderCreator)
+    assert isinstance(creator._dataloader, VanillaDataLoaderCreator)
     dataloader = creator.create()
     assert isinstance(dataloader, DataLoader)
     assert dataloader.batch_size == batch_size
@@ -106,7 +106,7 @@ def test_auto_dataloader_creator_non_distributed(dataset: Dataset, batch_size: i
 @patch("gtvision.creators.dataloader.distributed.dist.is_distributed", lambda *args: True)
 def test_auto_dataloader_creator_distributed(dataset: Dataset, batch_size: int) -> None:
     creator = AutoDataLoaderCreator(dataset, batch_size=batch_size)
-    assert isinstance(creator._creator, DistributedDataLoaderCreator)
+    assert isinstance(creator._dataloader, DistributedDataLoaderCreator)
     dataloader = creator.create()
     assert isinstance(dataloader, DataLoader)
     assert dataloader.batch_size == batch_size

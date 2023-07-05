@@ -60,16 +60,15 @@ class DataLoader2Creator(BaseDataLoader2Creator[T]):
         self._cache = bool(cache)
 
     def __str__(self) -> str:
+        config = {"dataloader": self._dataloader, "cache": self._cache}
         return (
             f"{self.__class__.__qualname__}(\n"
-            f"  dataloader={str_indent(self._dataloader)}\n"
-            f"  cache={self._cache},"
-            ")"
+            f"  {str_indent(str_pretty_dict(config, sorted_keys=True))}\n)"
         )
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader2[T]:
         dataloader = setup_dataloader2(self._dataloader)
-        if self._cache and not isinstance(self._dataloader, DataLoader2):
+        if self._cache:
             self._dataloader = dataloader
         return dataloader
 
