@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-__all__ = ["BaseDataFlowCreator", "setup_dataflow_creator"]
+__all__ = ["BaseDataFlowCreator", "is_dataflow_creator_config", "setup_dataflow_creator"]
 
 import logging
 from abc import ABC, abstractmethod
@@ -9,6 +9,7 @@ from typing import TYPE_CHECKING, Generic, TypeVar
 from gravitorch.experimental.dataflow.base import BaseDataFlow
 from gravitorch.utils.format import str_target_object
 from objectory import AbstractFactory
+from objectory.utils import is_object_config
 
 if TYPE_CHECKING:
     from gravitorch.engines import BaseEngine
@@ -43,6 +44,37 @@ class BaseDataFlowCreator(Generic[T], ABC, metaclass=AbstractFactory):
         -------
             ``BaseDataFlow``: The created dataflow.
         """
+
+
+def is_dataflow_creator_config(config: dict) -> bool:
+    r"""Indicate if the input configuration is a configuration for a
+    ``BaseDataFlowCreator``.
+
+    This function only checks if the value of the key  ``_target_``
+    is valid. It does not check the other values. If ``_target_``
+    indicates a function, the returned type hint is used to check
+    the class.
+
+    Args:
+    ----
+        config (dict): Specifies the configuration to check.
+
+    Returns:
+    -------
+        bool: ``True`` if the input configuration is a configuration
+            for a ``BaseDataFlowCreator`` object.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.dataflow import is_dataflow_creator_config
+        >>> is_dataflow_creator_config(
+        ...     {"_target_": "gtvision.creators.dataflow.IterableDataFlowCreator"}
+        ... )
+        True
+    """
+    return is_object_config(config, BaseDataFlowCreator)
 
 
 def setup_dataflow_creator(creator: BaseDataFlowCreator[T] | dict) -> BaseDataFlowCreator[T]:
