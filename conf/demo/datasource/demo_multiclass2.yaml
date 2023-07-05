@@ -5,14 +5,18 @@ dataflow_creators:  # TODO: rename???
     dataloader:
       _target_: gtvision.creators.dataloader2.VanillaDataLoader2Creator
       datapipe:
-        _target_: gtvision.creators.datapipe.DictBatcherIterDataPipeCreator
-        data:
-          _target_: gravitorch.data.datacreators.HypercubeVertexDataCreator
-          num_examples: 100000
-          num_classes: ${oc.select:num_classes,50}
-          feature_size: ${oc.select:feature_size,64}
-          noise_std: 0.2
-          random_seed: 3587656467008659679
+        _target_: gtvision.creators.datapipe.EpochRandomSeedDataPipeCreator
+        config:
+          _target_: gtvision.creators.datapipe.DictBatcherIterDataPipeCreator
+          batch_size: ${oc.select:batch_size,32}
+          shuffle: true
+          data:
+            _target_: gravitorch.data.datacreators.HypercubeVertexDataCreator
+            num_examples: 100000
+            num_classes: ${oc.select:num_classes,50}
+            feature_size: ${oc.select:feature_size,64}
+            noise_std: 0.2
+            random_seed: 3587656467008659679
 #  eval:
 #
 #
@@ -31,5 +35,3 @@ dataflow_creators:  # TODO: rename???
 #    feature_size: ${..train.feature_size}
 #    noise_std: ${..train.noise_std}
 #    random_seed: 10206458744488317472
-
-
