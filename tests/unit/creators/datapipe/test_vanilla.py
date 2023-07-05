@@ -44,7 +44,8 @@ def test_datapipe_creator_create_cache() -> None:
         {
             OBJECT_TARGET: "torch.utils.data.datapipes.iter.IterableWrapper",
             "iterable": [1, 2, 3, 4, 5],
-        }
+        },
+        cache=True,
     )
     datapipe1 = creator.create()
     datapipe2 = creator.create()
@@ -58,7 +59,6 @@ def test_datapipe_creator_create_no_cache() -> None:
             OBJECT_TARGET: "torch.utils.data.datapipes.iter.IterableWrapper",
             "iterable": [1, 2, 3, 4, 5],
         },
-        cache=False,
     )
     datapipe1 = creator.create()
     datapipe2 = creator.create()

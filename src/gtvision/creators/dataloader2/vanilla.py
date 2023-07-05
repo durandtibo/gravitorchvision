@@ -55,7 +55,7 @@ class DataLoader2Creator(BaseDataLoader2Creator[T]):
         <torchdata.dataloader2.DataLoader2 object at 0x0123456789>
     """
 
-    def __init__(self, dataloader: DataLoader2 | dict, cache: bool = True) -> None:
+    def __init__(self, dataloader: DataLoader2 | dict, cache: bool = False) -> None:
         self._dataloader = dataloader
         self._cache = bool(cache)
 

@@ -307,7 +307,7 @@ def test_distributed_dataloader_creator_dataset_config_repeat() -> None:
     dataloader2 = creator.create()
     assert isinstance(dataloader2, DataLoader)
 
-    assert dataloader1.dataset is dataloader2.dataset
+    assert dataloader1.dataset is not dataloader2.dataset
     assert objects_are_equal(tuple(dataloader1), tuple(dataloader2))
 
 
@@ -320,6 +320,7 @@ def test_distributed_dataloader_creator_dataset_creator_repeat_caching() -> None
                 "num_classes": 2,
                 "feature_size": 4,
             },
+            cache=True,
         ),
         batch_size=4,
         shuffle=True,
@@ -342,7 +343,6 @@ def test_distributed_dataloader_creator_dataset_creator_repeat_no_caching() -> N
                 "num_classes": 2,
                 "feature_size": 4,
             },
-            cache=False,
         ),
         batch_size=4,
         shuffle=True,

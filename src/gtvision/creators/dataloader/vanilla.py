@@ -48,7 +48,7 @@ class DataLoaderCreator(BaseDataLoaderCreator[T]):
         >>> creator.create()
     """
 
-    def __init__(self, dataloader: DataLoader | dict, cache: bool = True) -> None:
+    def __init__(self, dataloader: DataLoader | dict, cache: bool = False) -> None:
         self._dataloader = dataloader
         self._cache = bool(cache)
 

@@ -25,7 +25,6 @@ class AutoDataLoaderCreator(BaseDataLoaderCreator[T]):
     ``DistributedDataLoaderCreator``, otherwise it uses
     ``DataLoaderCreator``.
 
-
     Note the behavior of this class may change based on the new data
     loader creators.
 

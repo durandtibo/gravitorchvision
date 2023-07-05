@@ -36,7 +36,7 @@ class DataPipeCreator(BaseDataPipeCreator[T]):
     def __init__(
         self,
         datapipe: IterDataPipe[T] | MapDataPipe[T] | dict,
-        cache: bool = True,
+        cache: bool = False,
         deepcopy: bool = False,
     ) -> None:
         self._datapipe = datapipe
