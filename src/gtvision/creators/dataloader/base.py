@@ -1,15 +1,20 @@
 from __future__ import annotations
 
-__all__ = ["BaseDataLoaderCreator"]
+__all__ = ["BaseDataLoaderCreator", "is_dataloader_creator_config", "setup_dataloader_creator"]
 
+import logging
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING, Generic, TypeVar
 
+from gravitorch.utils.format import str_target_object
 from objectory import AbstractFactory
+from objectory.utils import is_object_config
 from torch.utils.data import DataLoader
 
 if TYPE_CHECKING:
     from gravitorch.engines import BaseEngine
+
+logger = logging.getLogger(__name__)
 
 T = TypeVar("T")
 
@@ -47,3 +52,58 @@ class BaseDataLoaderCreator(Generic[T], ABC, metaclass=AbstractFactory):
         -------
             ``torch.utils.data.DataLoader``: The created dataloader.
         """
+
+
+def is_dataloader_creator_config(config: dict) -> bool:
+    r"""Indicate if the input configuration is a configuration for a
+    ``BaseDataLoaderCreator``.
+
+    This function only checks if the value of the key  ``_target_``
+    is valid. It does not check the other values. If ``_target_``
+    indicates a function, the returned type hint is used to check
+    the class.
+
+    Args:
+    ----
+        config (dict): Specifies the configuration to check.
+
+    Returns:
+    -------
+        bool: ``True`` if the input configuration is a configuration
+            for a ``BaseDataLoaderCreator`` object.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.dataloader import is_dataloader_creator_config
+        >>> is_dataloader_creator_config(
+        ...     {"_target_": "gtvision.creators.dataloader.DataLoaderCreator"}
+        ... )
+        True
+    """
+    return is_object_config(config, BaseDataLoaderCreator)
+
+
+def setup_dataloader_creator(creator: BaseDataLoaderCreator[T] | dict) -> BaseDataLoaderCreator[T]:
+    r"""Sets up the dataloader creator.
+
+    The dataloader creator is instantiated from its configuration by
+    using the ``BaseDataLoaderCreator`` factory function.
+
+    Args:
+    ----
+        creator (``BaseDataLoaderCreator`` or dict): Specifies the
+            dataloader creator or its configuration.
+
+    Returns:
+    -------
+        ``BaseDataLoaderCreator``: The instantiated dataloader creator.
+    """
+    if isinstance(creator, dict):
+        logger.info(
+            "Initializing the dataloader creator from its configuration... "
+            f"{str_target_object(creator)}"
+        )
+        creator = BaseDataLoaderCreator.factory(**creator)
+    return creator

@@ -13,7 +13,8 @@ from gravitorch.utils.imports import is_torchdata_available
 from torch.utils.data import IterDataPipe, MapDataPipe
 
 from gtvision.creators.dataloader2.base import BaseDataLoader2Creator
-from gtvision.creators.datapipe.base import BaseDataPipeCreator
+from gtvision.creators.datapipe import DataPipeCreator
+from gtvision.creators.datapipe.base import BaseDataPipeCreator, setup_datapipe_creator
 
 if is_torchdata_available():
     from torchdata.dataloader2 import DataLoader2, ReadingServiceInterface
@@ -108,8 +109,8 @@ class VanillaDataLoader2Creator(BaseDataLoader2Creator[T]):
         if isinstance(datapipe, (IterDataPipe, MapDataPipe)) or (
             isinstance(datapipe, dict) and is_datapipe_config(datapipe)
         ):
-            datapipe = DataLoader2Creator(datapipe)
-        self._datapipe = datapipe
+            datapipe = DataPipeCreator(datapipe)
+        self._datapipe = setup_datapipe_creator(datapipe)
         self._datapipe_adapter_fn = datapipe_adapter_fn
         self._reading_service = reading_service
 
