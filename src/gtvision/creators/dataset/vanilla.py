@@ -27,7 +27,7 @@ class DatasetCreator(BaseDatasetCreator[T]):
             Default: ``False``
     """
 
-    def __init__(self, dataset: Dataset[T] | dict, cache: bool = True) -> None:
+    def __init__(self, dataset: Dataset[T] | dict, cache: bool = False) -> None:
         self._dataset = dataset
         self._cache = bool(cache)
 

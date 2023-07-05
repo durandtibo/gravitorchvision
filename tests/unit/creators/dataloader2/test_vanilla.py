@@ -69,7 +69,7 @@ def test_dataloader_creator_create_dataset_config(datapipe: IterDataPipe | MapDa
 @mark.parametrize("datapipe", DATAPIPES)
 def test_dataloader_creator_create_dataset_cache_true(datapipe: IterDataPipe | MapDataPipe) -> None:
     creator = DataLoader2Creator(
-        {OBJECT_TARGET: "torchdata.dataloader2.DataLoader2", "datapipe": datapipe},
+        {OBJECT_TARGET: "torchdata.dataloader2.DataLoader2", "datapipe": datapipe}, cache=True
     )
     dataloader1 = creator.create()
     dataloader2 = creator.create()
@@ -86,7 +86,6 @@ def test_dataloader_creator_create_dataloader_cache_false(
 ) -> None:
     creator = DataLoader2Creator(
         {OBJECT_TARGET: "torchdata.dataloader2.DataLoader2", "datapipe": datapipe},
-        cache=False,
     )
     dataloader1 = creator.create()
     dataloader2 = creator.create()

@@ -43,7 +43,8 @@ def test_dataset_creator_create_dataset_cache_true() -> None:
             "num_examples": 10,
             "num_classes": 2,
             "feature_size": 4,
-        }
+        },
+        cache=True,
     )
     dataset1 = creator.create()
     dataset2 = creator.create()
@@ -60,7 +61,6 @@ def test_dataset_creator_create_dataset_cache_false() -> None:
             "num_classes": 2,
             "feature_size": 4,
         },
-        cache=False,
     )
     dataset1 = creator.create()
     dataset2 = creator.create()

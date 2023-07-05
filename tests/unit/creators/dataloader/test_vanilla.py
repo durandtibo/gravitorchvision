@@ -87,6 +87,7 @@ def test_dataloader_creator_create_dataset_config(dataset: Dataset) -> None:
 def test_dataloader_creator_create_dataset_cache_true(dataset: Dataset) -> None:
     creator = DataLoaderCreator(
         {OBJECT_TARGET: "torch.utils.data.DataLoader", "dataset": dataset, "batch_size": 8},
+        cache=True,
     )
     dataloader1 = creator.create()
     dataloader2 = creator.create()
@@ -99,7 +100,6 @@ def test_dataloader_creator_create_dataset_cache_true(dataset: Dataset) -> None:
 def test_dataloader_creator_create_dataloader_cache_false(dataset: Dataset) -> None:
     creator = DataLoaderCreator(
         {OBJECT_TARGET: "torch.utils.data.DataLoader", "dataset": dataset, "batch_size": 8},
-        cache=False,
     )
     dataloader1 = creator.create()
     dataloader2 = creator.create()
@@ -362,7 +362,7 @@ def test_vanilla_dataloader_creator_dataset_config_repeat() -> None:
     dataloader2 = creator.create()
     assert isinstance(dataloader2, DataLoader)
 
-    assert dataloader1.dataset is dataloader2.dataset
+    assert dataloader1.dataset is not dataloader2.dataset
     assert objects_are_equal(tuple(dataloader1), tuple(dataloader2))
 
 
@@ -375,6 +375,7 @@ def test_vanilla_dataloader_creator_dataset_creator_repeat_caching() -> None:
                 "num_classes": 2,
                 "feature_size": 4,
             },
+            cache=True,
         ),
         batch_size=4,
         shuffle=True,
