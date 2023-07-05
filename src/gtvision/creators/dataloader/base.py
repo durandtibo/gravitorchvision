@@ -76,8 +76,10 @@ def is_dataloader_creator_config(config: dict) -> bool:
 
     .. code-block:: pycon
 
-        >>> from gravitorch.data.dataloaders import is_dataloader_config
-        >>> is_dataloader_config({"_target_": "gtvision.creators.dataloader.DataLoaderCreator"})
+        >>> from gtvision.creators.dataloader import is_dataloader_creator_config
+        >>> is_dataloader_creator_config(
+        ...     {"_target_": "gtvision.creators.dataloader.DataLoaderCreator"}
+        ... )
         True
     """
     return is_object_config(config, BaseDataLoaderCreator)
