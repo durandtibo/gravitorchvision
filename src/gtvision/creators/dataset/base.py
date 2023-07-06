@@ -32,8 +32,8 @@ class BaseDatasetCreator(Generic[T], ABC, metaclass=AbstractFactory):
         ...         "feature_size": 4,
         ...     }
         ... )
-        >>> creator.create()
-        DummyMultiClassDataset(num_examples=10, num_classes=2, feature_size=4, noise_std=0.2)
+        >>> creator.create()  # doctest: +ELLIPSIS
+        DummyMultiClassDataset(num_examples=10, num_classes=2, feature_size=4, noise_std=0.2, ...)
     """
 
     @abstractmethod

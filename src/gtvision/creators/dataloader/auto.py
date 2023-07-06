@@ -6,7 +6,7 @@ from typing import TypeVar
 
 from gravitorch.distributed import comm as dist
 from gravitorch.engines.base import BaseEngine
-from gravitorch.utils.format import str_indent, str_pretty_dict
+from gravitorch.utils.format import str_indent
 from torch.utils.data import DataLoader, Dataset
 
 from gtvision.creators.dataloader.base import BaseDataLoaderCreator
@@ -43,12 +43,8 @@ class AutoDataLoaderCreator(BaseDataLoaderCreator[T]):
         else:
             self._dataloader = VanillaDataLoaderCreator(dataset, **kwargs)
 
-    def __str__(self) -> str:
-        config = {"dataloader": self._dataloader}
-        return (
-            f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_pretty_dict(config, sorted_keys=True))}\n)"
-        )
+    def __repr__(self) -> str:
+        return f"{self.__class__.__qualname__}(\n  dataloader={str_indent(self._dataloader)}\n)"
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader[T]:
         return self._dataloader.create(engine=engine)

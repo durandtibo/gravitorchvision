@@ -39,7 +39,7 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         ...     SequentialDataPipeCreator,
         ...     ChainedDataPipeCreator,
         ... )
-        # Create an DataPipe object using a single DataPipe creator and no source input
+        >>> # Create an DataPipe object using a single DataPipe creator and no source input
         >>> creator = SequentialDataPipeCreator(
         ...     [
         ...         ChainedDataPipeCreator(
@@ -53,8 +53,8 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         >>> datapipe = creator.create()
         >>> tuple(datapipe)
         (1, 2, 3, 4)
-        # It is possible to use the source_inputs to create the same DataPipe object.
-        # The data is given by the source_inputs
+        >>> # It is possible to use the source_inputs to create the same DataPipe object.
+        >>> # The data is given by the source_inputs
         >>> creator = SequentialDataPipeCreator(
         ...     [
         ...         ChainedDataPipeCreator(
@@ -65,7 +65,7 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         >>> datapipe = creator.create(source_inputs=([1, 2, 3, 4],))
         >>> tuple(datapipe)
         (1, 2, 3, 4)
-        # Create an DataPipe object using two DataPipe creators and no source input
+        >>> # Create an DataPipe object using two DataPipe creators and no source input
         >>> creator = SequentialDataPipeCreator(
         ...     [
         ...         ChainedDataPipeCreator(
@@ -82,8 +82,8 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         >>> datapipe = creator.create()
         >>> tuple(datapipe)
         ([1, 2], [3, 4])
-        # It is possible to use the source_inputs to create the same DataPipe object.
-        # A source DataPipe object is specified by using source_inputs
+        >>> # It is possible to use the source_inputs to create the same DataPipe object.
+        >>> # A source DataPipe object is specified by using source_inputs
         >>> from gravitorch.datapipes.iter import SourceWrapper
         >>> creator = SequentialDataPipeCreator(
         ...     creators=[
@@ -98,8 +98,8 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         >>> datapipe = creator.create(source_inputs=[SourceWrapper(data=[1, 2, 3, 4])])
         >>> tuple(datapipe)
         ([1, 2], [3, 4])
-        # It is possible to create a sequential ``DataPipe`` object that takes several
-        # DataPipe objects as input.
+        >>> # It is possible to create a sequential ``DataPipe`` object that takes several
+        >>> # DataPipe objects as input.
         >>> creator = SequentialDataPipeCreator(
         ...     [
         ...         ChainedDataPipeCreator(

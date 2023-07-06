@@ -3,11 +3,13 @@ from __future__ import annotations
 __all__ = ["IterableDataFlowCreator"]
 
 from collections.abc import Iterable
+from contextlib import suppress
 from typing import TypeVar
 
 from gravitorch.engines.base import BaseEngine
 from gravitorch.experimental.dataflow import IterableDataFlow
 from gravitorch.utils import setup_object
+from gravitorch.utils.format import str_mapping
 
 from gtvision.creators.dataflow.base import BaseDataFlowCreator
 
@@ -41,8 +43,13 @@ class IterableDataFlowCreator(BaseDataFlowCreator[T]):
         self._cache = bool(cache)
         self._kwargs = kwargs
 
-    def __str__(self) -> str:
-        return f"{self.__class__.__qualname__}()"
+    def __repr__(self) -> str:
+        config = {"cache": self._cache} | self._kwargs
+        with suppress(TypeError):
+            config["length"] = f"{len(self._iterable):,}"
+        return (
+            f"{self.__class__.__qualname__}({str_mapping(config, sorted_keys=True, one_line=True)})"
+        )
 
     def create(self, engine: BaseEngine | None = None) -> IterableDataFlow[T]:
         iterable = setup_object(self._iterable)

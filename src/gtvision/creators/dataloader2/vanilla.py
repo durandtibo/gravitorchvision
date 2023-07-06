@@ -8,7 +8,7 @@ from typing import TypeVar
 from gravitorch.data.dataloaders import create_dataloader2, setup_dataloader2
 from gravitorch.datapipes import is_datapipe_config
 from gravitorch.engines import BaseEngine
-from gravitorch.utils.format import str_indent, str_pretty_dict
+from gravitorch.utils.format import str_indent, str_mapping, str_torch_mapping
 from gravitorch.utils.imports import is_torchdata_available
 from torch.utils.data import IterDataPipe, MapDataPipe
 
@@ -52,19 +52,19 @@ class DataLoader2Creator(BaseDataLoader2Creator[T]):
         ...         "dataloader": DataLoader2(IterableWrapper((1, 2, 3, 4))),
         ...     },
         ... )
-        >>> creator.create()
-        <torchdata.dataloader2.DataLoader2 object at 0x0123456789>
+        >>> creator.create()  # doctest: +ELLIPSIS
+        <torchdata.dataloader2.DataLoader2 object at 0x...>
     """
 
     def __init__(self, dataloader: DataLoader2 | dict, cache: bool = False) -> None:
         self._dataloader = dataloader
         self._cache = bool(cache)
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         config = {"dataloader": self._dataloader, "cache": self._cache}
         return (
             f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_pretty_dict(config, sorted_keys=True))}\n)"
+            f"  {str_indent(str_mapping(config, sorted_keys=True))}\n)"
         )
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader2[T]:
@@ -97,7 +97,7 @@ class VanillaDataLoader2Creator(BaseDataLoader2Creator[T]):
         >>> from gtvision.creators.dataloader2 import VanillaDataLoader2Creator
         >>> creator = VanillaDataLoader2Creator(IterableWrapper([1, 2, 3, 4, 5]))
         >>> creator.create()
-        <torchdata.dataloader2.DataLoader2 object at 0x0123456789>
+        <torchdata.dataloader2.DataLoader2 object at 0x...>
     """
 
     def __init__(
@@ -114,16 +114,13 @@ class VanillaDataLoader2Creator(BaseDataLoader2Creator[T]):
         self._datapipe_adapter_fn = datapipe_adapter_fn
         self._reading_service = reading_service
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         config = {
             "datapipe": self._datapipe,
             "datapipe_adapter_fn": self._datapipe_adapter_fn,
             "reading_service": self._reading_service,
         }
-        return (
-            f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_pretty_dict(config, sorted_keys=True))}\n)"
-        )
+        return f"{self.__class__.__qualname__}(\n" f"  {str_indent(str_torch_mapping(config))}\n)"
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader2[T]:
         return create_dataloader2(

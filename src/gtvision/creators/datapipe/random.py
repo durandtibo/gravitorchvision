@@ -8,6 +8,7 @@ from typing import TypeVar
 
 from gravitorch import distributed as dist
 from gravitorch.engines.base import BaseEngine
+from gravitorch.utils.format import str_indent, str_mapping
 from objectory import OBJECT_TARGET, factory
 from torch.utils.data import IterDataPipe, MapDataPipe
 
@@ -43,9 +44,10 @@ class EpochRandomSeedDataPipeCreator(BaseDataPipeCreator):
         self._random_seed_key = str(random_seed_key)
 
     def __repr__(self) -> str:
+        config = {"config": self._config, "random_seed_key": self._random_seed_key}
         return (
-            f"{self.__class__.__qualname__}(config={self._config}, "
-            f"random_seed_key={self._random_seed_key})"
+            f"{self.__class__.__qualname__}(\n"
+            f"  {str_indent(str_mapping(config, sorted_keys=True))}\n)"
         )
 
     def create(
