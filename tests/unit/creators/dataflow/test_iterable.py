@@ -15,8 +15,18 @@ def create_list() -> list:
 #############################################
 
 
-def test_iterable_dataflow_creator_str() -> None:
-    assert str(IterableDataFlowCreator((1, 2, 3, 4, 5))).startswith("IterableDataFlowCreator(")
+def test_iterable_dataflow_creator_str_with_length() -> None:
+    print(str(IterableDataFlowCreator((1, 2, 3, 4, 5))))
+    assert (
+        str(IterableDataFlowCreator((1, 2, 3, 4, 5)))
+        == "IterableDataFlowCreator(cache=False, length=5)"
+    )
+
+
+def test_iterable_dataflow_creator_str_without_length() -> None:
+    assert (
+        str(IterableDataFlowCreator(i for i in range(5))) == "IterableDataFlowCreator(cache=False)"
+    )
 
 
 def test_iterable_dataflow_creator_create() -> None:

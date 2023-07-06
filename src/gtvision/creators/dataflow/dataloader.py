@@ -7,7 +7,7 @@ from typing import TypeVar
 from gravitorch.data.dataloaders import is_dataloader_config
 from gravitorch.engines.base import BaseEngine
 from gravitorch.experimental.dataflow.dataloader import DataLoaderDataFlow
-from gravitorch.utils.format import str_indent, str_pretty_dict
+from gravitorch.utils.format import str_indent, str_torch_mapping
 from torch.utils.data import DataLoader
 
 from gtvision.creators.dataflow.base import BaseDataFlowCreator
@@ -26,6 +26,18 @@ class DataLoaderDataFlowCreator(BaseDataFlowCreator[T]):
             ``BaseDataLoaderCreator``): Specifies a dataloader (or its
             configuration) or a dataloader creator (or its
             configuration).
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gravitorch.data.datasets import ExampleDataset
+        >>> from gtvision.creators.dataflow import DataLoaderDataFlowCreator
+        >>> from torch.utils.data import DataLoader
+        >>> creator = DataLoaderDataFlowCreator(DataLoader(ExampleDataset([1, 2, 3, 4, 5])))
+        >>> dataloader = creator.create()
+        >>> dataloader
+        DataLoaderDataFlow(length=5)
     """
 
     def __init__(self, dataloader: DataLoader | BaseDataLoaderCreator | dict) -> None:
@@ -35,11 +47,11 @@ class DataLoaderDataFlowCreator(BaseDataFlowCreator[T]):
             dataloader = DataLoaderCreator(dataloader)
         self._dataloader = setup_dataloader_creator(dataloader)
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         config = {"dataloader": self._dataloader}
         return (
             f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_pretty_dict(config, sorted_keys=True))}\n)"
+            f"  {str_indent(str_torch_mapping(config, sorted_keys=True))}\n)"
         )
 
     def create(self, engine: BaseEngine | None = None) -> DataLoaderDataFlow[T]:
