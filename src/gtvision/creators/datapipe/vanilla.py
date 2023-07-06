@@ -7,7 +7,7 @@ from typing import TypeVar
 
 from gravitorch.datapipes import clone_datapipe, setup_datapipe
 from gravitorch.engines.base import BaseEngine
-from gravitorch.utils.format import str_indent, str_pretty_dict
+from gravitorch.utils.format import str_indent, str_mapping
 from torch.utils.data import IterDataPipe, MapDataPipe
 
 from gtvision.creators.datapipe.base import BaseDataPipeCreator
@@ -43,11 +43,11 @@ class DataPipeCreator(BaseDataPipeCreator[T]):
         self._cache = bool(cache)
         self._deepcopy = bool(deepcopy)
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         config = {"datapipe": self._datapipe, "cache": self._cache, "deepcopy": self._deepcopy}
         return (
             f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_pretty_dict(config, sorted_keys=True))}\n)"
+            f"  {str_indent(str_mapping(config, sorted_keys=True))}\n)"
         )
 
     def create(

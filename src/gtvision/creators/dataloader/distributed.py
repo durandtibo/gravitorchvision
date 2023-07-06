@@ -8,7 +8,7 @@ from gravitorch.data.dataloaders import create_dataloader
 from gravitorch.data.datasets import is_dataset_config
 from gravitorch.distributed import comm as dist
 from gravitorch.engines.base import BaseEngine
-from gravitorch.utils.format import str_indent, str_pretty_dict
+from gravitorch.utils.format import str_indent, str_mapping
 from gravitorch.utils.seed import get_torch_generator
 from torch.utils.data import DataLoader, Dataset, DistributedSampler
 
@@ -63,7 +63,7 @@ class DistributedDataLoaderCreator(BaseDataLoaderCreator[T]):
         self._seed = int(seed)
         self._kwargs = kwargs
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         config = {
             "dataset": self._dataset,
             "shuffle": self._shuffle,
@@ -72,7 +72,7 @@ class DistributedDataLoaderCreator(BaseDataLoaderCreator[T]):
         } | self._kwargs
         return (
             f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_pretty_dict(config, sorted_keys=True))}\n)"
+            f"  {str_indent(str_mapping(config, sorted_keys=True))}\n)"
         )
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader[T]:

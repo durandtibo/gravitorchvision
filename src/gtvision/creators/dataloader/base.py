@@ -26,17 +26,17 @@ class BaseDataLoaderCreator(Generic[T], ABC, metaclass=AbstractFactory):
 
     .. code-block:: pycon
 
-        >>> from gtvision.creators.dataloader import DataLoaderCreator
-        >>> creator = DataLoaderCreator(
+        >>> from gtvision.creators.dataloader import VanillaDataLoaderCreator
+        >>> creator = VanillaDataLoaderCreator(
         ...     {
-        ...         "_target_": "gravitorch.data.datasets.DummyMultiClassDataLoader",
+        ...         "_target_": "gravitorch.data.datasets.DummyMultiClassDataset",
         ...         "num_examples": 10,
         ...         "num_classes": 2,
         ...         "feature_size": 4,
         ...     }
         ... )
-        >>> creator.create()
-        <torch.utils.data.dataloader.DataLoader object at 0x0123456789>
+        >>> creator.create()  # doctest: +ELLIPSIS
+        <torch.utils.data.dataloader.DataLoader object at 0x...>
     """
 
     @abstractmethod

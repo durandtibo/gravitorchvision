@@ -40,9 +40,10 @@ class VanillaDataSource(BaseDataSource):
         ...         "eval": IterableDataFlowCreator(["a", "b", "c"]),
         ...     }
         ... )
-        DataFlowDataSource(
-          (train) IterableDataFlowCreator()
-          (eval) IterableDataFlowCreator()
+        >>> datasource
+        VanillaDataSource(
+          (train): IterableDataFlowCreator(cache=False, length=4)
+          (eval): IterableDataFlowCreator(cache=False, length=3)
         )
     """
 

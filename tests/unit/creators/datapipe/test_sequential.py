@@ -114,8 +114,8 @@ def test_sequential_datapipe_creator_create_batcher() -> None:
         [
             ChainedDataPipeCreator(
                 {
-                    OBJECT_TARGET: "gravitorch.datapipes.iter.SourceWrapper",
-                    "source": [1, 2, 3, 4],
+                    OBJECT_TARGET: "torch.utils.data.datapipes.iter.IterableWrapper",
+                    "iterable": [1, 2, 3, 4],
                 },
             ),
             ChainedDataPipeCreator(

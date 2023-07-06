@@ -6,7 +6,7 @@ from typing import TypeVar
 
 from gravitorch.data.datasets import setup_dataset
 from gravitorch.engines.base import BaseEngine
-from gravitorch.utils.format import str_indent, str_pretty_dict
+from gravitorch.utils.format import str_indent, str_mapping
 from torch.utils.data import Dataset
 
 from gtvision.creators.dataset.base import BaseDatasetCreator
@@ -31,11 +31,11 @@ class DatasetCreator(BaseDatasetCreator[T]):
         self._dataset = dataset
         self._cache = bool(cache)
 
-    def __str__(self) -> str:
+    def __repr__(self) -> str:
         config = {"dataset": self._dataset, "cache": self._cache}
         return (
             f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_pretty_dict(config, sorted_keys=True))}\n)"
+            f"  {str_indent(str_mapping(config, sorted_keys=True))}\n)"
         )
 
     def create(self, engine: BaseEngine | None = None) -> Dataset[T]:
