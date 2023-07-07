@@ -127,7 +127,6 @@ class VanillaDataLoader2Creator(BaseDataLoader2Creator[T]):
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader2[T]:
         datapipe = self._datapipe.create(engine)
-        logger.info(f"datapipe:\n{self._datapipe}")
         logger.info(f"datapipe:\n{datapipe}")
         return create_dataloader2(
             datapipe=datapipe,
