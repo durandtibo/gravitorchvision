@@ -5,8 +5,8 @@ dataflow_creators:  # TODO: rename???
     dataloader:
       _target_: gtvision.creators.dataloader2.VanillaDataLoader2Creator
       datapipe:
-        _target_: gtvision.creators.datapipe.EpochRandomSeedDataPipeCreator
-        config:
+#        _target_: gtvision.creators.datapipe.EpochRandomSeedDataPipeCreator
+#        config:
           _target_: gtvision.creators.datapipe.DictBatcherIterDataPipeCreator
           batch_size: ${oc.select:batch_size,32}
           shuffle: true
