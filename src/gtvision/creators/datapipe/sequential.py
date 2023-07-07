@@ -34,7 +34,7 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
     .. code-block:: pycon
 
         >>> from torch.utils.data import IterDataPipe, MapDataPipe
-        >>> from objectory import OBJECT_TARGET
+        >>> from torch.utils.data.datapipes.iter import Batcher, IterableWrapper
         >>> from gtvision.creators.datapipe import (
         ...     SequentialDataPipeCreator,
         ...     ChainedDataPipeCreator,
@@ -44,7 +44,7 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         ...     [
         ...         ChainedDataPipeCreator(
         ...             {
-        ...                 OBJECT_TARGET: "torch.utils.data.datapipes.iter.IterableWrapper",
+        ...                 "_target_": "torch.utils.data.datapipes.iter.IterableWrapper",
         ...                 "iterable": [1, 2, 3, 4],
         ...             },
         ...         ),
@@ -58,7 +58,7 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         >>> creator = SequentialDataPipeCreator(
         ...     [
         ...         ChainedDataPipeCreator(
-        ...             {OBJECT_TARGET: "torch.utils.data.datapipes.iter.IterableWrapper"},
+        ...             {"_target_": "torch.utils.data.datapipes.iter.IterableWrapper"},
         ...         ),
         ...     ]
         ... )
@@ -69,11 +69,14 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         >>> creator = SequentialDataPipeCreator(
         ...     [
         ...         ChainedDataPipeCreator(
-        ...             {OBJECT_TARGET: "torch.utils.data.datapipes.iter.IterableWrapper"},
+        ...             {
+        ...                 "_target_": "torch.utils.data.datapipes.iter.IterableWrapper",
+        ...                 "iterable": [1, 2, 3, 4],
+        ...             },
         ...         ),
         ...         ChainedDataPipeCreator(
         ...             {
-        ...                 OBJECT_TARGET: "torch.utils.data.datapipes.iter.Batcher",
+        ...                 "_target_": "torch.utils.data.datapipes.iter.Batcher",
         ...                 "batch_size": 2,
         ...             },
         ...         ),
@@ -84,18 +87,17 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         ([1, 2], [3, 4])
         >>> # It is possible to use the source_inputs to create the same DataPipe object.
         >>> # A source DataPipe object is specified by using source_inputs
-        >>> from gravitorch.datapipes.iter import SourceWrapper
         >>> creator = SequentialDataPipeCreator(
         ...     creators=[
         ...         ChainedDataPipeCreator(
         ...             {
-        ...                 OBJECT_TARGET: "torch.utils.data.datapipes.iter.Batcher",
+        ...                 "_target_": "torch.utils.data.datapipes.iter.Batcher",
         ...                 "batch_size": 2,
         ...             },
         ...         ),
         ...     ]
         ... )
-        >>> datapipe = creator.create(source_inputs=[SourceWrapper(data=[1, 2, 3, 4])])
+        >>> datapipe = creator.create(source_inputs=[IterableWrapper([1, 2, 3, 4])])
         >>> tuple(datapipe)
         ([1, 2], [3, 4])
         >>> # It is possible to create a sequential ``DataPipe`` object that takes several
@@ -103,21 +105,18 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
         >>> creator = SequentialDataPipeCreator(
         ...     [
         ...         ChainedDataPipeCreator(
-        ...             {OBJECT_TARGET: "torch.utils.data.datapipes.iter.Multiplexer"},
-        ...         ),
-        ...         ChainedDataPipeCreator(
-        ...             {
-        ...                 OBJECT_TARGET: "torch.utils.data.datapipes.iter.Batcher",
-        ...                 "batch_size": 2,
-        ...             },
+        ...             [
+        ...                 {"_target_": "torch.utils.data.datapipes.iter.Multiplexer"},
+        ...                 {
+        ...                     "_target_": "torch.utils.data.datapipes.iter.Batcher",
+        ...                     "batch_size": 2,
+        ...                 },
+        ...             ],
         ...         ),
         ...     ]
         ... )
         >>> datapipe = creator.create(
-        ...     source_inputs=[
-        ...         SourceWrapper(data=[1, 2, 3, 4]),
-        ...         SourceWrapper(data=[11, 12, 13, 14]),
-        ...     ],
+        ...     source_inputs=(IterableWrapper([1, 2, 3, 4]), IterableWrapper([11, 12, 13, 14])),
         ... )
         >>> tuple(datapipe)
         ([1, 11], [2, 12], [3, 13], [4, 14])

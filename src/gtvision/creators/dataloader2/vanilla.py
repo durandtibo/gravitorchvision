@@ -2,6 +2,7 @@ from __future__ import annotations
 
 __all__ = ["DataLoader2Creator", "VanillaDataLoader2Creator"]
 
+import logging
 from collections.abc import Iterable
 from typing import TypeVar
 
@@ -26,6 +27,8 @@ else:  # pragma: no cover
 
 T = TypeVar("T")
 
+logger = logging.getLogger(__name__)
+
 
 class DataLoader2Creator(BaseDataLoader2Creator[T]):
     r"""Implements a simple dataloader creator.
@@ -49,11 +52,11 @@ class DataLoader2Creator(BaseDataLoader2Creator[T]):
         >>> creator = DataLoader2Creator(
         ...     {
         ...         "_target_": "torchdata.dataloader2.DataLoader2",
-        ...         "dataloader": DataLoader2(IterableWrapper((1, 2, 3, 4))),
+        ...         "datapipe": IterableWrapper((1, 2, 3, 4)),
         ...     },
         ... )
         >>> creator.create()  # doctest: +ELLIPSIS
-        <torchdata.dataloader2.DataLoader2 object at 0x...>
+        <torchdata.dataloader2.dataloader2.DataLoader2 object at 0x...>
     """
 
     def __init__(self, dataloader: DataLoader2 | dict, cache: bool = False) -> None:
@@ -97,7 +100,7 @@ class VanillaDataLoader2Creator(BaseDataLoader2Creator[T]):
         >>> from gtvision.creators.dataloader2 import VanillaDataLoader2Creator
         >>> creator = VanillaDataLoader2Creator(IterableWrapper([1, 2, 3, 4, 5]))
         >>> creator.create()
-        <torchdata.dataloader2.DataLoader2 object at 0x...>
+        <torchdata.dataloader2.dataloader2.DataLoader2 object at 0x...>
     """
 
     def __init__(
@@ -123,8 +126,11 @@ class VanillaDataLoader2Creator(BaseDataLoader2Creator[T]):
         return f"{self.__class__.__qualname__}(\n" f"  {str_indent(str_torch_mapping(config))}\n)"
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader2[T]:
+        datapipe = self._datapipe.create(engine)
+        logger.info(f"datapipe:\n{self._datapipe}")
+        logger.info(f"datapipe:\n{datapipe}")
         return create_dataloader2(
-            datapipe=self._datapipe.create(engine),
+            datapipe=datapipe,
             datapipe_adapter_fn=self._datapipe_adapter_fn,
             reading_service=self._reading_service,
         )
