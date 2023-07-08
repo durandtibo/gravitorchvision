@@ -77,6 +77,25 @@ def setup_datapipe_creator(creator: BaseDataPipeCreator | dict) -> BaseDataPipeC
     Returns:
     -------
         ``BaseDataPipeCreator``: The instantiated datapipe creator.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.datapipe import setup_datapipe_creator
+        >>> creator = setup_datapipe_creator(
+        ...     {
+        ...         "_target_": "gtvision.creators.datapipe.ChainedDataPipeCreator",
+        ...         "config": {
+        ...             "_target_": "torch.utils.data.datapipes.iter.IterableWrapper",
+        ...             "iterable": [1, 2, 3, 4],
+        ...         },
+        ...     }
+        ... )
+        >>> creator
+        ChainedDataPipeCreator(
+          (0): {'_target_': 'torch.utils.data.datapipes.iter.IterableWrapper', 'iterable': [1, 2, 3, 4]}
+        )
     """
     if isinstance(creator, dict):
         logger.info(

@@ -99,6 +99,31 @@ def setup_dataloader_creator(creator: BaseDataLoaderCreator[T] | dict) -> BaseDa
     Returns:
     -------
         ``BaseDataLoaderCreator``: The instantiated dataloader creator.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.dataloader import setup_dataloader_creator
+        >>> creator = setup_dataloader_creator(
+        ...     {
+        ...         "_target_": "gtvision.creators.dataloader.VanillaDataLoaderCreator",
+        ...         "dataset": {
+        ...             "_target_": "gravitorch.data.datasets.DummyMultiClassDataset",
+        ...             "num_examples": 10,
+        ...             "num_classes": 2,
+        ...             "feature_size": 4,
+        ...         },
+        ...     }
+        ... )
+        >>> creator
+        VanillaDataLoaderCreator(
+          dataset=DatasetCreator(
+              cache=False
+              dataset={'_target_': 'gravitorch.data.datasets.DummyMultiClassDataset', 'num_examples': 10, 'num_classes': 2, 'feature_size': 4}
+            )
+          seed=0
+        )
     """
     if isinstance(creator, dict):
         logger.info(

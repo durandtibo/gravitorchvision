@@ -31,6 +31,21 @@ class DataPipeCreator(BaseDataPipeCreator[T]):
             It allows a deterministic behavior when in-place
             operations are performed on the data.
             Default: ``False``
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.datapipe import DataPipeCreator
+        >>> creator = DataPipeCreator(
+        ...     {
+        ...         "_target_": "torch.utils.data.datapipes.iter.IterableWrapper",
+        ...         "iterable": [1, 2, 3, 4],
+        ...     }
+        ... )
+        >>> datapipe = creator.create()
+        >>> tuple(datapipe)
+        (1, 2, 3, 4)
     """
 
     def __init__(

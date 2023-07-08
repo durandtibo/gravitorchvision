@@ -101,6 +101,31 @@ def setup_dataloader2_creator(
     Returns:
     -------
         ``BaseDataLoader2Creator``: The instantiated dataloader creator.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.dataloader2 import setup_dataloader2_creator
+        >>> creator = setup_dataloader2_creator(
+        ...     {
+        ...         "_target_": "gtvision.creators.dataloader2.VanillaDataLoader2Creator",
+        ...         "datapipe": {
+        ...             "_target_": "torch.utils.data.datapipes.iter.IterableWrapper",
+        ...             "iterable": [1, 2, 3, 4, 5],
+        ...         },
+        ...     }
+        ... )
+        >>> creator
+        VanillaDataLoader2Creator(
+          (datapipe): DataPipeCreator(
+              cache=False
+              datapipe={'_target_': 'torch.utils.data.datapipes.iter.IterableWrapper', 'iterable': [1, 2, 3, 4, 5]}
+              deepcopy=False
+            )
+          (datapipe_adapter_fn): None
+          (reading_service): None
+        )
     """
     if isinstance(creator, dict):
         logger.info(

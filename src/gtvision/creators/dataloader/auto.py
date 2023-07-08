@@ -35,6 +35,22 @@ class AutoDataLoaderCreator(BaseDataLoaderCreator[T]):
             (or its configuration).
         **kwargs: See ``DataLoaderCreator`` or
             ``DistributedDataLoaderCreator`` documentation.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.dataloader import AutoDataLoaderCreator
+        >>> creator = AutoDataLoaderCreator(
+        ...     {
+        ...         "_target_": "gravitorch.data.datasets.DummyMultiClassDataset",
+        ...         "num_examples": 10,
+        ...         "num_classes": 2,
+        ...         "feature_size": 4,
+        ...     }
+        ... )
+        >>> creator.create()  # doctest: +ELLIPSIS
+        <torch.utils.data.dataloader.DataLoader object at 0x...>
     """
 
     def __init__(self, dataset: Dataset | BaseDatasetCreator | dict, **kwargs) -> None:
