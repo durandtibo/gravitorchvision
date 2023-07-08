@@ -5,7 +5,7 @@ from unittest.mock import Mock
 from gravitorch.engines import BaseEngine
 from objectory import OBJECT_TARGET
 from pytest import raises
-from torch.utils.data.datapipes.iter import Batcher
+from torch.utils.data.datapipes.iter import Batcher, IterableWrapper
 
 from gtvision.creators.datapipe import (
     BaseDataPipeCreator,
@@ -126,3 +126,34 @@ def test_sequential_datapipe_creator_create_batcher() -> None:
     datapipe = creator.create()
     assert isinstance(datapipe, Batcher)
     assert tuple(datapipe) == ([1, 2], [3, 4])
+
+
+def test_sequential_datapipe_creator_create_source_inputs_one_datapipe() -> None:
+    creator = SequentialDataPipeCreator(
+        [
+            ChainedDataPipeCreator(
+                {OBJECT_TARGET: "torch.utils.data.datapipes.iter.Batcher", "batch_size": 2},
+            ),
+        ]
+    )
+    datapipe = creator.create(source_inputs=(IterableWrapper([1, 2, 3, 4]),))
+    assert isinstance(datapipe, Batcher)
+    assert tuple(datapipe) == ([1, 2], [3, 4])
+
+
+def test_sequential_datapipe_creator_create_source_inputs_two_datapipes() -> None:
+    creator = SequentialDataPipeCreator(
+        [
+            ChainedDataPipeCreator(
+                [
+                    {OBJECT_TARGET: "torch.utils.data.datapipes.iter.Multiplexer"},
+                    {OBJECT_TARGET: "torch.utils.data.datapipes.iter.Batcher", "batch_size": 2},
+                ],
+            ),
+        ]
+    )
+    datapipe = creator.create(
+        source_inputs=(IterableWrapper([1, 2, 3, 4]), IterableWrapper([10, 20, 30, 40]))
+    )
+    assert isinstance(datapipe, Batcher)
+    assert tuple(datapipe) == ([1, 10], [2, 20], [3, 30], [4, 40])

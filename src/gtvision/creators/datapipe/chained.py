@@ -92,7 +92,7 @@ class ChainedDataPipeCreator(BaseDataPipeCreator[T]):
         ...         },
         ...     ],
         ... )
-        >>> datapipe = creator.create(source_inputs=[IterableWrapper(data=[1, 2, 3, 4])])
+        >>> datapipe = creator.create(source_inputs=[IterableWrapper([1, 2, 3, 4])])
         >>> tuple(datapipe)
         ([1, 2], [3, 4])
         >>> # It is possible to create a chained ``DataPipe`` object that takes several
@@ -108,8 +108,8 @@ class ChainedDataPipeCreator(BaseDataPipeCreator[T]):
         ... )
         >>> datapipe = creator.create(
         ...     source_inputs=[
-        ...         IterableWrapper(data=[1, 2, 3, 4]),
-        ...         IterableWrapper(data=[11, 12, 13, 14]),
+        ...         IterableWrapper([1, 2, 3, 4]),
+        ...         IterableWrapper([11, 12, 13, 14]),
         ...     ],
         ... )
         >>> tuple(datapipe)
