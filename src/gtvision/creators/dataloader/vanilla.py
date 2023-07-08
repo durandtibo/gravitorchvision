@@ -46,6 +46,7 @@ class DataLoaderCreator(BaseDataLoaderCreator[T]):
         ...     },
         ... )
         >>> creator.create()
+        <torch.utils.data.dataloader.DataLoader object at 0x...>
     """
 
     def __init__(self, dataloader: DataLoader | dict, cache: bool = False) -> None:
@@ -78,6 +79,22 @@ class VanillaDataLoaderCreator(BaseDataLoaderCreator[T]):
         seed (int, optional): Specifies the random seed used to
             reproduce the shuffling of the samples. Default: ``0``
         **kwargs: See ``torch.utils.data.DataLoader`` documentation.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.dataloader import VanillaDataLoaderCreator
+        >>> creator = VanillaDataLoaderCreator(
+        ...     {
+        ...         "_target_": "gravitorch.data.datasets.DummyMultiClassDataset",
+        ...         "num_examples": 10,
+        ...         "num_classes": 2,
+        ...         "feature_size": 4,
+        ...     }
+        ... )
+        >>> creator.create()  # doctest: +ELLIPSIS
+        <torch.utils.data.dataloader.DataLoader object at 0x...>
     """
 
     def __init__(

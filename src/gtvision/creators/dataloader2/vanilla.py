@@ -123,7 +123,7 @@ class VanillaDataLoader2Creator(BaseDataLoader2Creator[T]):
             "datapipe_adapter_fn": self._datapipe_adapter_fn,
             "reading_service": self._reading_service,
         }
-        return f"{self.__class__.__qualname__}(\n" f"  {str_indent(str_torch_mapping(config))}\n)"
+        return f"{self.__class__.__qualname__}(\n  {str_indent(str_torch_mapping(config))}\n)"
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader2[T]:
         datapipe = self._datapipe.create(engine)

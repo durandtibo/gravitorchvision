@@ -29,6 +29,7 @@ class BaseDataFlowCreator(Generic[T], ABC, metaclass=AbstractFactory):
         >>> from gtvision.creators.dataflow import IterableDataFlowCreator
         >>> creator = IterableDataFlowCreator((1, 2, 3, 4, 5))
         >>> creator.create()
+        IterableDataFlow(length=5)
     """
 
     @abstractmethod
@@ -91,6 +92,20 @@ def setup_dataflow_creator(creator: BaseDataFlowCreator[T] | dict) -> BaseDataFl
     Returns:
     -------
         ``BaseDataFlowCreator``: The instantiated dataflow creator.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.dataflow import setup_dataflow_creator
+        >>> creator = setup_dataflow_creator(
+        ...     {
+        ...         "_target_": "gtvision.creators.dataflow.IterableDataFlowCreator",
+        ...         "iterable": (1, 2, 3, 4, 5),
+        ...     }
+        ... )
+        >>> creator
+        IterableDataFlowCreator(cache=False, length=5)
     """
     if isinstance(creator, dict):
         logger.info(

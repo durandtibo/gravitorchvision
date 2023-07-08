@@ -25,6 +25,22 @@ class DatasetCreator(BaseDatasetCreator[T]):
             only the first time, and then the same data is returned
             for each call to the ``create`` method.
             Default: ``False``
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.dataset import DatasetCreator
+        >>> creator = DatasetCreator(
+        ...     {
+        ...         "_target_": "gravitorch.data.datasets.DummyMultiClassDataset",
+        ...         "num_examples": 10,
+        ...         "num_classes": 2,
+        ...         "feature_size": 4,
+        ...     }
+        ... )
+        >>> creator.create()  # doctest: +ELLIPSIS
+        DummyMultiClassDataset(num_examples=10, num_classes=2, feature_size=4, noise_std=0.2, ...)
     """
 
     def __init__(self, dataset: Dataset[T] | dict, cache: bool = False) -> None:

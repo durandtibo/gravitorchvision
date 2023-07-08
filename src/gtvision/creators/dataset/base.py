@@ -65,6 +65,28 @@ def setup_dataset_creator(creator: BaseDatasetCreator | dict) -> BaseDatasetCrea
     Returns:
     -------
         ``BaseDatasetCreator``: The instantiated dataset creator.
+
+    Example usage:
+
+    .. code-block:: pycon
+
+        >>> from gtvision.creators.dataset import setup_dataset_creator
+        >>> creator = setup_dataset_creator(
+        ...     {
+        ...         "_target_": "gtvision.creators.dataset.DatasetCreator",
+        ...         "dataset": {
+        ...             "_target_": "gravitorch.data.datasets.DummyMultiClassDataset",
+        ...             "num_examples": 10,
+        ...             "num_classes": 2,
+        ...             "feature_size": 4,
+        ...         },
+        ...     }
+        ... )
+        >>> creator
+        DatasetCreator(
+          cache=False
+          dataset={'_target_': 'gravitorch.data.datasets.DummyMultiClassDataset', 'num_examples': 10, 'num_classes': 2, 'feature_size': 4}
+        )
     """
     if isinstance(creator, dict):
         logger.info(
