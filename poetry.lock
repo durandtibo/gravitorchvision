@@ -228,17 +228,17 @@ development = ["black", "flake8", "mypy", "pytest", "types-colorama"]
 
 [[package]]
 name = "coola"
-version = "0.0.12"
+version = "0.0.18"
 description = "A library to check if two complex/nested objects are equal or not"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "coola-0.0.12-py3-none-any.whl", hash = "sha256:bc4c3cab93e0a9777a0c12e611c288bdb4d982405f7eac430215ba6799922268"},
-    {file = "coola-0.0.12.tar.gz", hash = "sha256:a456020261e3dc05521e9ce34b7a39fdf910f389ee56bbee6042456cede00ee1"},
+    {file = "coola-0.0.18-py3-none-any.whl", hash = "sha256:dac9ef5be59158bb9641dc9a0947584f7c8ed40342b7dde62a95590caa4462f5"},
+    {file = "coola-0.0.18.tar.gz", hash = "sha256:56635f937a772ba7281d0f2493af231e929bc85e3d19e2031c90a6f888ddfe81"},
 ]
 
 [package.extras]
-all = ["numpy (>=1.20,<2.0)", "pandas (>=1.3,<3.0)", "polars (>=0.18.3,<1.0)", "torch (>=1.10,<3.0)", "xarray (>=2023.1.0)"]
+all = ["jax (>=0.3.0)", "jaxlib (>=0.3.0)", "numpy (>=1.20,<2.0)", "pandas (>=1.3,<3.0)", "polars (>=0.18.3,<1.0)", "torch (>=1.10,<3.0)", "xarray (>=2023.3.0)"]
 
 [[package]]
 name = "coverage"
