@@ -47,7 +47,7 @@ all = [
 ]
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.3"
+black = "^23.9"
 coverage = { extras = ["toml"], version = "^7.2" }
 docformatter = { extras = ["tomli"], version = "^1.7" }
 pre-commit = "^3.3"
