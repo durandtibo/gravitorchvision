@@ -6,11 +6,11 @@ import logging
 from collections.abc import Mapping
 from typing import Any
 
+from coola.utils import str_indent, str_mapping
 from gravitorch.datasources import BaseDataSource, LoaderNotFoundError
 from gravitorch.engines import BaseEngine
 from gravitorch.experimental.dataflow import BaseDataFlow
 from gravitorch.utils.asset import AssetManager
-from gravitorch.utils.format import str_indent, str_torch_mapping
 
 from gtvision.creators.dataflow.base import BaseDataFlowCreator, setup_dataflow_creator
 
@@ -56,7 +56,7 @@ class VanillaDataSource(BaseDataSource):
     def __repr__(self) -> str:
         return (
             f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_torch_mapping(self._dataflow_creators))}\n)"
+            f"  {str_indent(str_mapping(self._dataflow_creators))}\n)"
         )
 
     def attach(self, engine: BaseEngine) -> None:
