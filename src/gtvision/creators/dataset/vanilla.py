@@ -39,7 +39,7 @@ class DatasetCreator(BaseDatasetCreator[T]):
         ...         "feature_size": 4,
         ...     }
         ... )
-        >>> creator.create()  # doctest: +ELLIPSIS
+        >>> creator.create()  
         DummyMultiClassDataset(num_examples=10, num_classes=2, feature_size=4, noise_std=0.2, ...)
     """
 

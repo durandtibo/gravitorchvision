@@ -55,7 +55,7 @@ class DataLoader2Creator(BaseDataLoader2Creator[T]):
         ...         "datapipe": IterableWrapper((1, 2, 3, 4)),
         ...     },
         ... )
-        >>> creator.create()  # doctest: +ELLIPSIS
+        >>> creator.create()  
         <torchdata.dataloader2.dataloader2.DataLoader2 object at 0x...>
     """
 
