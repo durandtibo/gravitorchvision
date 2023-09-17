@@ -6,10 +6,10 @@ import logging
 from collections.abc import Iterable
 from typing import TypeVar
 
+from coola.utils import str_indent, str_mapping
 from gravitorch.data.dataloaders import create_dataloader2, setup_dataloader2
 from gravitorch.datapipes import is_datapipe_config
 from gravitorch.engines import BaseEngine
-from gravitorch.utils.format import str_indent, str_mapping, str_torch_mapping
 from gravitorch.utils.imports import is_torchdata_available
 from torch.utils.data import IterDataPipe, MapDataPipe
 
@@ -55,7 +55,7 @@ class DataLoader2Creator(BaseDataLoader2Creator[T]):
         ...         "datapipe": IterableWrapper((1, 2, 3, 4)),
         ...     },
         ... )
-        >>> creator.create()  # doctest: +ELLIPSIS
+        >>> creator.create()
         <torchdata.dataloader2.dataloader2.DataLoader2 object at 0x...>
     """
 
@@ -123,7 +123,7 @@ class VanillaDataLoader2Creator(BaseDataLoader2Creator[T]):
             "datapipe_adapter_fn": self._datapipe_adapter_fn,
             "reading_service": self._reading_service,
         }
-        return f"{self.__class__.__qualname__}(\n  {str_indent(str_torch_mapping(config))}\n)"
+        return f"{self.__class__.__qualname__}(\n  {str_indent(str_mapping(config))}\n)"
 
     def create(self, engine: BaseEngine | None = None) -> DataLoader2[T]:
         datapipe = self._datapipe.create(engine)
