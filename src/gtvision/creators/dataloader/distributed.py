@@ -57,7 +57,7 @@ class DistributedDataLoaderCreator(BaseDataLoaderCreator[T]):
         ...         "feature_size": 4,
         ...     }
         ... )
-        >>> creator.create()  
+        >>> creator.create()
         <torch.utils.data.dataloader.DataLoader object at 0x...>
     """
 
