@@ -35,7 +35,7 @@ class BaseDataLoaderCreator(Generic[T], ABC, metaclass=AbstractFactory):
         ...         "feature_size": 4,
         ...     }
         ... )
-        >>> creator.create()  # doctest: +ELLIPSIS
+        >>> creator.create()
         <torch.utils.data.dataloader.DataLoader object at 0x...>
     """
 
