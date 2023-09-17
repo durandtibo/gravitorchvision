@@ -5,9 +5,9 @@ __all__ = ["ChainedDataPipeCreator"]
 from collections.abc import Sequence
 from typing import TypeVar
 
+from coola.utils.format import str_indent, str_sequence
 from gravitorch.datapipes import create_chained_datapipe
 from gravitorch.engines.base import BaseEngine
-from gravitorch.utils.format import str_indent, str_torch_sequence
 from torch.utils.data import IterDataPipe, MapDataPipe
 
 from gtvision.creators.datapipe.base import BaseDataPipeCreator
@@ -124,9 +124,7 @@ class ChainedDataPipeCreator(BaseDataPipeCreator[T]):
         self._config = config
 
     def __repr__(self) -> str:
-        return (
-            f"{self.__class__.__qualname__}(\n  {str_indent(str_torch_sequence(self._config))}\n)"
-        )
+        return f"{self.__class__.__qualname__}(\n  {str_indent(str_sequence(self._config))}\n)"
 
     def create(
         self, engine: BaseEngine | None = None, source_inputs: Sequence | None = None

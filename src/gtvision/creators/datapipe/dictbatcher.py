@@ -5,7 +5,7 @@ __all__ = ["DictBatcherIterDataPipeCreator"]
 from collections.abc import Sequence
 from typing import TypeVar
 
-from gravitorch.data.datacreators import BaseDataCreator, setup_data_creator
+from gravitorch.data.datacreators import BaseDataCreator, setup_datacreator
 from gravitorch.datapipes.iter import DictBatcher
 from gravitorch.engines.base import BaseEngine
 from gravitorch.utils.format import str_indent, str_mapping
@@ -40,16 +40,16 @@ class DictBatcherIterDataPipeCreator(BaseDataPipeCreator[T]):
         >>> datapipe = creator.create()
         >>> datapipe
         DictBatcherIterDataPipe(
-          batch_size=4,
-          shuffle=False,
-          random_seed=11918852809641073385,
-          datapipe_or_data=<class 'dict'> | length=1
-            (key): <class 'torch.Tensor'> | shape=torch.Size([6, 3]) | dtype=torch.float32 | mean=1.000000 | std=0.000000 | min=1.000000 | max=1.000000,
+        (batch_size): 4
+          (shuffle): False
+          (random_seed): 11918852809641073385
+          (datapipe_or_data): <class 'dict'> (length=1)
+              (key): <class 'torch.Tensor'> | shape=torch.Size([6, 3]) | dtype=torch.float32 | device=cpu
         )
     """
 
     def __init__(self, data: BaseDataCreator[dict[str, Tensor]] | dict, **kwargs) -> None:
-        self._data = setup_data_creator(data)
+        self._data = setup_datacreator(data)
         self._kwargs = kwargs
 
     def __repr__(self) -> str:

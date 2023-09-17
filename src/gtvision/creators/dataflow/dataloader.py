@@ -4,10 +4,10 @@ __all__ = ["DataLoaderDataFlowCreator"]
 
 from typing import TypeVar
 
+from coola.utils import str_indent, str_mapping
 from gravitorch.data.dataloaders import is_dataloader_config
 from gravitorch.engines.base import BaseEngine
 from gravitorch.experimental.dataflow.dataloader import DataLoaderDataFlow
-from gravitorch.utils.format import str_indent, str_torch_mapping
 from torch.utils.data import DataLoader
 
 from gtvision.creators.dataflow.base import BaseDataFlowCreator
@@ -51,7 +51,7 @@ class DataLoaderDataFlowCreator(BaseDataFlowCreator[T]):
         config = {"dataloader": self._dataloader}
         return (
             f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_torch_mapping(config, sorted_keys=True))}\n)"
+            f"  {str_indent(str_mapping(config, sorted_keys=True))}\n)"
         )
 
     def create(self, engine: BaseEngine | None = None) -> DataLoaderDataFlow[T]:

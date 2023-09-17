@@ -5,8 +5,8 @@ __all__ = ["SequentialDataPipeCreator"]
 from collections.abc import Sequence
 from typing import TypeVar
 
+from coola.utils.format import str_indent, str_sequence
 from gravitorch.engines.base import BaseEngine
-from gravitorch.utils.format import str_indent, str_torch_sequence
 from torch.utils.data import IterDataPipe, MapDataPipe
 
 from gtvision.creators.datapipe.base import BaseDataPipeCreator, setup_datapipe_creator
@@ -129,8 +129,7 @@ class SequentialDataPipeCreator(BaseDataPipeCreator):
 
     def __repr__(self) -> str:
         return (
-            f"{self.__class__.__qualname__}(\n"
-            f"  {str_indent(str_torch_sequence(self._creators))},\n)"
+            f"{self.__class__.__qualname__}(\n" f"  {str_indent(str_sequence(self._creators))},\n)"
         )
 
     def create(

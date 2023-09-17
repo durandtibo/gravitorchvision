@@ -9,7 +9,8 @@ from torchvision.transforms import Compose
 
 
 def create_compose(transforms: Sequence[Callable | dict]) -> Compose:
-    r"""Instantiates a ``torchvision.transforms.Compose`` from its configuration.
+    r"""Instantiates a ``torchvision.transforms.Compose`` from its
+    configuration.
 
     Args:
         transforms (sequence of ``Transform`` objects): Specifies the
