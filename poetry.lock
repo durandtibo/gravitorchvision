@@ -746,13 +746,13 @@ files = [
 
 [[package]]
 name = "objectory"
-version = "0.0.7"
+version = "0.2.0"
 description = "A light library for general purpose object factories"
 optional = false
-python-versions = ">=3.9,<3.12"
+python-versions = "<3.14,>=3.9"
 files = [
-    {file = "objectory-0.0.7-py3-none-any.whl", hash = "sha256:16116c3320a17acbdddb6fb837dfeb158a063f6b5ce9f1519afabb1b9dadf079"},
-    {file = "objectory-0.0.7.tar.gz", hash = "sha256:723d54d253cabeee2d0f3e016cae1caab78879953b866b96d2a28f7ca90b95d6"},
+    {file = "objectory-0.2.0-py3-none-any.whl", hash = "sha256:4da872ccc9768fe61bd14d37189a850a2524b19ebc3d33b71aa0c7b3423481e8"},
+    {file = "objectory-0.2.0.tar.gz", hash = "sha256:c47d447cc4b34d292ce4dd967bdad94554e5cac12940dfd808713f0f41a9fb6e"},
 ]
 
 [package.dependencies]
@@ -1529,4 +1529,4 @@ all = ["colorlog", "torchdata"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.9,<3.12"
-content-hash = "8735be1366886c56b3708db2c9e915a3fd0410a74826b1ce3a5320d0aa29a431"
+content-hash = "9af20f8c8156f15cc77ed73b96d837da09c57953b9bd6f506842c2e8220aee27"
